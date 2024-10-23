@@ -1,12 +1,18 @@
-import { Link } from "react-router-dom";
 import { useRef } from "react";
 
 function EditorTest() {
     const contentEditableRef = useRef<HTMLDivElement>(null);
 
-    const execCommand = (command: string) => {
-        document.execCommand(command, false, null);
-    }
+    const applyStyle = (tag: string) => {
+        const selection = document.getSelection();
+        if (!selection || selection.rangeCount === 0) return;
+
+        const range = selection.getRangeAt(0);
+        const selectedText = range.extractContents();
+        const span = document.createElement(tag);
+        span.appendChild(selectedText);
+        range.insertNode(span);
+    };
 
     return (
         <div>
@@ -14,13 +20,15 @@ function EditorTest() {
 
             <input type="text" placeholder="enter title lol" />
             <br />
-            <button onClick={() => execCommand('bold')}><b>B</b></button>
-            <button onClick={() => execCommand('italic')}><i>i</i></button>
-            <button onClick={() => execCommand('underline')}><u>U</u></button>
+            <div className="toolbar">
+                <button onClick={() => applyStyle('b')}><b>B</b></button>
+                <button onClick={() => applyStyle('i')}><i>i</i></button>
+                <button onClick={() => applyStyle('u')}><u>U</u></button>
+            </div>
             <br />
-            <div contentEditable={true}></div>
+            <div ref={contentEditableRef} contentEditable={true}></div>
         </div>
     )
 }
 
-export default EditorTest
+export default EditorTest;
