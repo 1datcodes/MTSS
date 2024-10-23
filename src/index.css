@@ -1,0 +1,9 @@
+[contentEditable=true] {
+    padding: 30px;
+}
+
+[contentEditable=true]:empty::before {
+    content: "Begin typing here...";
+    /* pointer-events: none; */
+    display: block;
+}

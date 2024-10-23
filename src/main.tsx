@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import HomePage from './HomePage/HomePage'
 import Resources from './Resources/Resources'
 import Supports from './Supports/SupportPages'
+import EditorTest from './EditorTest'
 import './index.css'
 
 createRoot(document.getElementById('root')!).render(
@@ -14,6 +15,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/" element={<HomePage />} />
         <Route path="/resources" element={<Resources />} />
         <Route path="/supports" element={<Supports />} />
+        <Route path="/editor" element={<EditorTest />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,
