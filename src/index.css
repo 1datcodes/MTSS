@@ -1,8 +1,18 @@
+.title-editor {
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    border: none;
+    outline: none;
+}
+
 [contentEditable=true] {
     padding: 30px;
 }
 
 [contentEditable=true]:empty::before {
+    color: #aaa;
     content: "Begin typing here...";
     /* pointer-events: none; */
     display: block;
