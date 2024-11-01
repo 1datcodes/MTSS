@@ -1,14 +1,11 @@
+import Editor from "../Tools/Editor";
+
 function Resources() {
-  return (
-    <div>
-      <h1>Resources</h1>
-      <ul>
-        <li>Resource 1</li>
-        <li>Resource 2</li>
-        <li>Resource 3</li>
-      </ul>
-    </div>
-  );
+    return (
+        <div className="Resources">
+            <Editor pageName="Resources" />
+        </div>
+    )
 }
 
 export default Resources;
