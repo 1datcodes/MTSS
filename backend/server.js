@@ -3,7 +3,8 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/auth.js";
 
-const devPortID = import.meta.env.VITE_DEV_PORT;
+// const devPortID = import.meta.env.VITE_DEV_PORT;
+const devPortID = process.env.VITE_DEV_PORT;
 
 const app = express();
 connectDB();

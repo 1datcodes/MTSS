@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useAuth } from "./AuthContext";
+import Navbar from "./Tools/Navbar";
 
 const Signup = () => {
   const [username, setUsername] = useState("");
@@ -32,6 +33,8 @@ const Signup = () => {
 
   return (
     <div>
+      <Navbar />
+      <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
