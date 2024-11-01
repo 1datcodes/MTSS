@@ -15,7 +15,8 @@ const Signup = () => {
       return;
     }
     try {
-      const res = await axios.post("http://localhost:999/api/auth/register", {
+      const devPortID = import.meta.env.VITE_DEV_PORT;
+      const res = await axios.post(`http://localhost:${devPortID}/api/auth/register`, {
         username,
         password,
       });
