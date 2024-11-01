@@ -17,10 +17,13 @@ const Signup = () => {
     }
     try {
       const devPortID = import.meta.env.VITE_DEV_PORT;
-      const res = await axios.post(`http://localhost:${devPortID}/api/auth/register`, {
-        username,
-        password,
-      });
+      const res = await axios.post(
+        `http://localhost:${devPortID}/api/auth/register`,
+        {
+          username,
+          password,
+        },
+      );
       localStorage.setItem("token", res.data.token);
       setMessage(res.data.msg); // Set success message
       setAuthUsername(username); // Set the username in AuthContext

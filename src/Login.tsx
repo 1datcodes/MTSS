@@ -14,10 +14,13 @@ const Login = () => {
     // console.log("Form submitted"); // Debug log
     try {
       const devPortID = import.meta.env.VITE_DEV_PORT;
-      const res = await axios.post(`http://localhost:${devPortID}/api/auth/login`, {
-        username,
-        password,
-      });
+      const res = await axios.post(
+        `http://localhost:${devPortID}/api/auth/login`,
+        {
+          username,
+          password,
+        },
+      );
       // console.log("Response:", res.data); // Debug log
       localStorage.setItem("token", res.data.token);
       setMessage(res.data.msg); // Set success message
