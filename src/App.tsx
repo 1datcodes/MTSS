@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import HomePage from "./HomePage/HomePage";
-import AuthStatus from "./AuthStatus";
-import Login from "./Login";
-import Signup from "./Signup";
+import AuthStatus from "./Login System/AuthStatus";
+import Login from "./Login System/Login";
+import Signup from "./Login System/Signup";
 import Resources from "./Resources/Resources";
 import Supports from "./Supports/SupportPages";
 

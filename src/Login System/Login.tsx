@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useAuth } from "./AuthContext";
-import Navbar from "./Tools/Navbar";
+import Navbar from "../Tools/Navbar";
 
 const Login = () => {
   const [username, setUsername] = useState("");
