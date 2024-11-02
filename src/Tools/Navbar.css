@@ -1,0 +1,28 @@
+.Navbar {
+  background-color: #932020;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10%;
+  height: 75px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.Navbar button {
+  height: 100%;
+  background-color: #932020;
+  color: #d0d0d0;
+  text-decoration: none;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.Navbar button:hover {
+  background-color: #a63535;
+}

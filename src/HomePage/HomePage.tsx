@@ -1,14 +1,13 @@
-import { Link } from 'react-router-dom';
+import Editor from "../Tools/Editor";
+import Navbar from "../Tools/Navbar";
 
 function HomePage() {
-    return (
-        <div>
-            <h1>Home Page</h1>
-            <Link to="/resources">Resources</Link>
-            <br />
-            <Link to="/supports">Supports</Link>
-        </div>
-    );
+  return (
+    <div className="HomePage">
+      <Navbar />
+      <Editor pageName="HomePage" />
+    </div>
+  );
 }
 
 export default HomePage;

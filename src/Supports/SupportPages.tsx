@@ -1,15 +1,13 @@
+import Editor from "../Tools/Editor";
+import Navbar from "../Tools/Navbar";
 
 function Supports() {
-    return (
-        <div>
-            <h1>Supports</h1>
-            <ul>
-                <li>Support 1</li>
-                <li>Support 2</li>
-                <li>Support 3</li>
-            </ul>
-        </div>
-    )
+  return (
+    <div className="Supports">
+      <Navbar />
+      <Editor pageName="Supports" />
+    </div>
+  );
 }
 
 export default Supports;

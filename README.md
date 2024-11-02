@@ -1,50 +1,17 @@
-# React + TypeScript + Vite
+## How to run locally
+1. Install all dependancy using "npm i"
+2. start backend server via "node backend/server.js"
+3. type "npm run dev" on another terminal window
+4. go to the localhost link
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Important: Make sure to ask for the .env file to Kaicheng or Michi since it stores the API keys
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Version Update
+- Version 0.1.0
+    - WYSIWYG editor works using React TipTap and saves to local storage (storage on your browser)
+    - Log in system works by using MongoDB and login persists through local storage (stays logged in even after closing browser)
+    - To do:
+        - Save changes on the content to a database so that it changes for all users
+        - Migrate user authentication to an authentication provider like Auth0 for more security
+        - Add functionality to the editor like links, images, and videos
+        - Make the website pop out by styling the page
