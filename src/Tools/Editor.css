@@ -21,10 +21,19 @@
   transition: all 0.3s ease-in-out;
 }
 
-.Menubar button:hover {
+.Menubar button:hover:not(:disabled) {
   background-color: #db8686;
+}
+
+.Menubar button:disabled {
+  cursor: default;
+  background-color: initial;
 }
 
 .Menubar button.is-active {
   background-color: #c66c6c;
+}
+
+.ProseMirror:focus-visible {
+  outline-offset: 0.4rem;
 }

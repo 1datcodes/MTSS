@@ -8,7 +8,7 @@ function Profile() {
                 <h1>Profile</h1>
                 <h2>Status</h2>
                 <p>Username: {localStorage.getItem("username")}</p>
-                <p>Access Type: undefined</p>
+                <p>Access Type: {localStorage.getItem("access")}</p>
             </div>
         </div>
     );

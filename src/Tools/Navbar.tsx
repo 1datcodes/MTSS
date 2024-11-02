@@ -8,6 +8,7 @@ const Navbar = () => {
     if (username) {
       localStorage.removeItem("username");
       localStorage.removeItem("token");
+      localStorage.setItem("access", "user");
       setUsername(null);
       window.location.assign("/");
     } else {
@@ -19,7 +20,7 @@ const Navbar = () => {
     if (username) {
       window.location.assign("/profile");
     } else {
-      window.location.assign("/login");
+      window.location.assign("/signup");
     }
   }
 

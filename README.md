@@ -20,3 +20,8 @@ Important: Make sure to ask for the .env file to Kaicheng or Michi since it stor
 
 - Version 0.1.1
     - Added Profile page where users can view their username and access type
+    - Only users with admin permission can edit pages now (currently sheth shilpan)
+    - To do:
+        - Look for admin permission through database
+    - Finished:
+        - Authorizing access to editor
