@@ -1,10 +1,17 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import HomePage from "./HomePage/HomePage";
+
+// Login system
 import AuthStatus from "./Login System/AuthStatus";
 import Login from "./Login System/Login";
 import Signup from "./Login System/Signup";
+
+// Pages
+import HomePage from "./HomePage/HomePage";
 import Resources from "./Resources/Resources";
 import Supports from "./Supports/SupportPages";
+
+import "./App.css";
+
 
 function App() {
   return (

@@ -1,6 +1,7 @@
 import { EditorContent, useEditor } from "@tiptap/react";
 import { useEffect } from "react";
 import StarterKit from "@tiptap/starter-kit";
+import "./Editor.css";
 
 function Editor({ pageName }: { pageName: string }) {
   const editor = useEditor({
@@ -19,7 +20,7 @@ function Editor({ pageName }: { pageName: string }) {
   }, [pageName, editor]);
 
   return (
-    <div>
+    <div className="Content">
       {editor && (
         <div className="Menubar">
           <button
@@ -99,7 +100,7 @@ function Editor({ pageName }: { pageName: string }) {
             onClick={() => editor.chain().focus().toggleBlockquote().run()}
             className={editor.isActive("blockquote") ? "is-active" : ""}
           >
-            Blockquote
+            Quote
           </button>
           <button
             onClick={() => editor.chain().focus().undo().run()}
