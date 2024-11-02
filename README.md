@@ -3,6 +3,7 @@
 2. start backend server via "node backend/server.js"
 3. type "npm run dev" on another terminal window
 4. go to the localhost link
+
 Important: Make sure to ask for the .env file to Kaicheng or Michi since it stores the API keys
 
 ## Version Update
