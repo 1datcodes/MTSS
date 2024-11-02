@@ -25,6 +25,8 @@ const Login = () => {
       localStorage.setItem("username", username); // Store username in localStorage
       setMessage(res.data.msg); // Set success message
       setAuthUsername(username); // Set the username in AuthContext
+
+      window.location.assign("/profile"); // Redirect to profile
     } catch (err) {
       console.error("Error:", err); // Debug log
       if (

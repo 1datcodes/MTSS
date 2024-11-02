@@ -15,6 +15,14 @@ const Navbar = () => {
     }
   }
 
+  const handleProfile = () => {
+    if (username) {
+      window.location.assign("/profile");
+    } else {
+      window.location.assign("/login");
+    }
+  }
+
   return (
     <div className="Navbar">
       <button className="Home" onClick={() => window.location.assign("/")}>
@@ -40,9 +48,9 @@ const Navbar = () => {
       </button>
       <button
         className="Signup"
-        onClick={() => window.location.assign("/signup")}
+        onClick={handleProfile}
       >
-        Signup
+        {username ? username : "Signup"}
       </button>
     </div>
   );
