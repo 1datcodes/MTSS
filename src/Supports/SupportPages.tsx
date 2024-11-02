@@ -2,10 +2,16 @@ import Editor from "../Tools/Editor";
 import Navbar from "../Tools/Navbar";
 
 function Supports() {
+  const access = localStorage.getItem("access");
+
   return (
     <div className="Supports">
       <Navbar />
-      <Editor pageName="Supports" />
+      {access === "admin" ? (
+        <Editor pageName="Supports" />
+      ) : (
+        <div className="Content" dangerouslySetInnerHTML={{ __html: localStorage.getItem("Supports") || "" }} />
+      )}
     </div>
   );
 }

@@ -23,8 +23,19 @@ const Login = () => {
       );
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("username", username); // Store username in localStorage
+
+      // Set access level based on username (for demonstration purposes)
+      // This should be done using a more secure method in a real application
+      if (username === "sheth shilpan") {
+        localStorage.setItem("access", "admin");
+      } else {
+        localStorage.setItem("access", "user");
+      }
+
       setMessage(res.data.msg); // Set success message
       setAuthUsername(username); // Set the username in AuthContext
+
+      window.location.assign("/profile"); // Redirect to profile
     } catch (err) {
       console.error("Error:", err); // Debug log
       if (

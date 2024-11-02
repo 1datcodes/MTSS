@@ -1,7 +1,7 @@
 import { useAuth } from "./AuthContext";
 
 const AuthStatus = () => {
-  const { username, setUsername } = useAuth();
+  const { username } = useAuth();
   console.log("AuthStatus username:", username); // Debug log
 
   // const handleLogout = () => {

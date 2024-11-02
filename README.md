@@ -9,9 +9,19 @@ Important: Make sure to ask for the .env file to Kaicheng or Michi since it stor
 ## Version Update
 - Version 0.1.0
     - WYSIWYG editor works using React TipTap and saves to local storage (storage on your browser)
-    - Log in system works by using MongoDB and login persists through local storage (stays logged in even after closing browser)
+    - Login system works by using MongoDB
+    - Login persists through local storage (stays logged in even after closing browser)
     - To do:
         - Save changes on the content to a database so that it changes for all users
+        - Authorize access to editor for Admins and don't allow others
         - Migrate user authentication to an authentication provider like Auth0 for more security
         - Add functionality to the editor like links, images, and videos
         - Make the website pop out by styling the page
+
+- Version 0.1.1
+    - Added Profile page where users can view their username and access type
+    - Only users with admin permission can edit pages now (currently sheth shilpan)
+    - To do:
+        - Look for admin permission through database
+    - Finished:
+        - Authorizing access to editor

@@ -8,10 +8,19 @@ const Navbar = () => {
     if (username) {
       localStorage.removeItem("username");
       localStorage.removeItem("token");
+      localStorage.setItem("access", "user");
       setUsername(null);
       window.location.assign("/");
     } else {
       window.location.assign("/login");
+    }
+  }
+
+  const handleProfile = () => {
+    if (username) {
+      window.location.assign("/profile");
+    } else {
+      window.location.assign("/signup");
     }
   }
 
@@ -40,9 +49,9 @@ const Navbar = () => {
       </button>
       <button
         className="Signup"
-        onClick={() => window.location.assign("/signup")}
+        onClick={handleProfile}
       >
-        Signup
+        {username ? username : "Signup"}
       </button>
     </div>
   );
