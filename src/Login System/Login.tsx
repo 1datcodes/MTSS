@@ -12,7 +12,6 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // console.log("Form submitted"); // Debug log
     try {
       const devPortID = import.meta.env.VITE_DEV_PORT;
       const res = await axios.post(
@@ -22,11 +21,10 @@ const Login = () => {
           password,
         },
       );
-      // console.log("Response:", res.data); // Debug log
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("username", username); // Store username in localStorage
       setMessage(res.data.msg); // Set success message
       setAuthUsername(username); // Set the username in AuthContext
-      console.log("Logged in as", username); // Debug log
     } catch (err) {
       console.error("Error:", err); // Debug log
       if (
