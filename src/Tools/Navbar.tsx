@@ -1,6 +1,20 @@
+import { useAuth } from "../Login System/AuthContext";
 import "./Navbar.css";
 
 const Navbar = () => {
+  const { username, setUsername } = useAuth();
+
+  const handleLogging = () => {
+    if (username) {
+      localStorage.removeItem("username");
+      localStorage.removeItem("token");
+      setUsername(null);
+      window.location.assign("/");
+    } else {
+      window.location.assign("/login");
+    }
+  }
+
   return (
     <div className="Navbar">
       <button className="Home" onClick={() => window.location.assign("/")}>
@@ -20,9 +34,9 @@ const Navbar = () => {
       </button>
       <button
         className="Login"
-        onClick={() => window.location.assign("/login")}
+        onClick={handleLogging}
       >
-        Login
+        {username ? "Logout" : "Login"}
       </button>
       <button
         className="Signup"
