@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useAuth } from "./AuthContext";
 import Navbar from "../Tools/Navbar";
+import "./Login.css";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -44,23 +45,27 @@ const Login = () => {
   return (
     <div>
       <Navbar />
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">Login</button>
-      </form>
-      {message && <p>{message}</p>} {/* Display message */}
+      <div className="Content">
+        <h1 className="Login-title">Login</h1>
+        <form className="Login-form" onSubmit={handleSubmit}>
+          <input
+            className="Username"
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <input
+            className="Password"
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button className="Submit" type="submit">Login</button>
+        </form>
+        {message && <p className="Login-message">{message}</p>} {/* Display message */}
+      </div>
     </div>
   );
 };

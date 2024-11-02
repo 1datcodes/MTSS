@@ -1,23 +1,23 @@
-import { Link } from "react-router-dom";
 import "./Navbar.css";
 
 const Navbar = () => {
+
   return (
     <div className="Navbar">
-      <button className="Home">
-        <Link to="/">Home</Link>
+      <button className="Home" onClick={() => window.location.assign("/")}>
+        Home
       </button>
-      <button className="Supports">
-        <Link to="/supports">Supports</Link>
+      <button className="Supports" onClick={() => window.location.assign("/supports")}>
+        Supports
       </button>
-      <button className="Resources">
-        <Link to="/resources">Resources</Link>
+      <button className="Resources" onClick={() => window.location.assign("/resources")}>
+        Resources
       </button>
-      <button className="Login">
-        <Link to="/login">Login</Link>
+      <button className="Login" onClick={() => window.location.assign("/login")}>
+        Login
       </button>
-      <button className="Signup">
-        <Link to="/signup">Signup</Link>
+      <button className="Signup" onClick={() => window.location.assign("/signup")}>
+        Signup
       </button>
     </div>
   );
