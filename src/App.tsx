@@ -12,7 +12,6 @@ import Supports from "./Supports/SupportPages";
 
 import "./App.css";
 
-
 function App() {
   return (
     <Router>

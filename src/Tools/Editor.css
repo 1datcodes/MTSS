@@ -1,30 +1,30 @@
 .Menubar {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 10px;
-    align-items: center;
-    padding: 0 10px;
-    color: white;
-    font-size: 1.2em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 10px;
+  align-items: center;
+  padding: 0 10px;
+  color: white;
+  font-size: 1.2em;
 }
 
 .Menubar button {
-    height: fit-content;
-    color: #6e0b0b;
-    border: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 16px;
-    padding: 10px 16px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
+  height: fit-content;
+  color: #6e0b0b;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  padding: 10px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
 }
 
 .Menubar button:hover {
-    background-color: #db8686;
+  background-color: #db8686;
 }
 
 .Menubar button.is-active {
-    background-color: #c66c6c;
+  background-color: #c66c6c;
 }

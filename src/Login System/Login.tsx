@@ -60,9 +60,12 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button className="Submit" type="submit">Login</button>
+          <button className="Submit" type="submit">
+            Login
+          </button>
         </form>
-        {message && <p className="Login-message">{message}</p>} {/* Display message */}
+        {message && <p className="Login-message">{message}</p>}{" "}
+        {/* Display message */}
       </div>
     </div>
   );

@@ -9,7 +9,8 @@ const AuthStatus = () => {
     setUsername(null);
   };
 
-  return ( // testing purposes
+  return (
+    // testing purposes
     <div style={{ position: "fixed", top: 10, right: 10 }}>
       {username ? (
         <>
