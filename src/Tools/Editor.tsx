@@ -2,6 +2,8 @@ import { EditorContent, useEditor, BubbleMenu, FloatingMenu } from "@tiptap/reac
 import { useEffect, useCallback } from "react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
+import Image from "@tiptap/extension-image";
+import ImageResize from "tiptap-extension-resize-image";
 import "./Editor.css";
 
 function Editor({ pageName }: { pageName: string }) {
@@ -14,6 +16,8 @@ function Editor({ pageName }: { pageName: string }) {
         autolink: true,
         defaultProtocol: "https",
       }),
+      Image,
+      ImageResize,
     ],
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
@@ -42,6 +46,14 @@ function Editor({ pageName }: { pageName: string }) {
     }
 
     editor?.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
+  }, [editor]);
+
+  const addImage = useCallback(() => {
+    const url = window.prompt("URL");
+
+    if (url) {
+      editor?.chain().focus().setImage({ src: url }).run();
+    }
   }, [editor]);
 
   return (
@@ -138,6 +150,11 @@ function Editor({ pageName }: { pageName: string }) {
               className={editor.isActive("blockquote") ? "is-active" : ""}
             >
               Quote
+            </button>
+            <button
+              onClick={() => addImage()}
+            >
+              Set Image
             </button>
             <button
               onClick={() => editor.chain().focus().undo().run()}
