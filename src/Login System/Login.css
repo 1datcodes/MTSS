@@ -15,7 +15,8 @@
 }
 
 .Username,
-.Password {
+.Password,
+.ConfirmPassword {
   width: 200px;
   height: 30px;
   padding: 0 10px;

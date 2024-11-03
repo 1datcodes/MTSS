@@ -7,6 +7,7 @@ import "./Login.css";
 const Signup = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
   const { setUsername: setAuthUsername, setAccess } = useAuth();
 
@@ -14,6 +15,10 @@ const Signup = () => {
     e.preventDefault();
     if (!username || !password) {
       setMessage("Username and password cannot be blank");
+      return;
+    }
+    if (password !== confirmPassword) {
+      setMessage("Passwords do not match");
       return;
     }
     try {
@@ -63,6 +68,13 @@ const Signup = () => {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+          />
+          <input
+            className="ConfirmPassword"
+            type="password"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
           />
           <button className="Submit" type="submit">
             Sign Up
