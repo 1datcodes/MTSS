@@ -1,10 +1,14 @@
 import { EditorContent, useEditor, BubbleMenu, FloatingMenu } from "@tiptap/react";
 import { useState, useEffect, useCallback } from "react";
+
+// Extensions
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
 import Image from "@tiptap/extension-image";
 import ImageResize from "tiptap-extension-resize-image";
 import Youtube from "@tiptap/extension-youtube";
+import Typography from "@tiptap/extension-typography";
+
 import "./Editor.css";
 
 function Editor({ pageName }: { pageName: string }) {
@@ -26,6 +30,7 @@ function Editor({ pageName }: { pageName: string }) {
         controls: false,
         nocookie: true,
       }),
+      Typography,
     ],
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
