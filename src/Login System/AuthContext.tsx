@@ -9,26 +9,28 @@ import {
 interface AuthContextType {
   username: string | null;
   setUsername: (username: string | null) => void;
+  access: string | null;
+  setAccess: (access: string | null) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [username, setUsername] = useState<string | null>(null);
+  const [access, setAccess] = useState<string | null>(null);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      // Optionally, decode the token to get the username or make an API call to validate the token
       const storedUsername = localStorage.getItem("username");
-      if (storedUsername) {
-        setUsername(storedUsername);
-      }
+      const storedAccess = localStorage.getItem("access");
+      if (storedUsername) setUsername(storedUsername);
+      if (storedAccess) setAccess(storedAccess);
     }
   }, []);
 
   return (
-    <AuthContext.Provider value={{ username, setUsername }}>
+    <AuthContext.Provider value={{ username, setUsername, access, setAccess }}>
       {children}
     </AuthContext.Provider>
   );

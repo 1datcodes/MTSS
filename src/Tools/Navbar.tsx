@@ -2,14 +2,15 @@ import { useAuth } from "../Login System/AuthContext";
 import "./Navbar.css";
 
 const Navbar = () => {
-  const { username, setUsername } = useAuth();
+  const { username, setUsername, setAccess } = useAuth();
 
   const handleLogging = () => {
     if (username) {
       localStorage.removeItem("username");
       localStorage.removeItem("token");
-      localStorage.setItem("access", "user");
+      localStorage.removeItem("access");
       setUsername(null);
+      setAccess(null);
       window.location.assign("/");
     } else {
       window.location.assign("/login");
@@ -29,28 +30,16 @@ const Navbar = () => {
       <button className="Home" onClick={() => window.location.assign("/")}>
         Home
       </button>
-      <button
-        className="Supports"
-        onClick={() => window.location.assign("/supports")}
-      >
+      <button className="Supports" onClick={() => window.location.assign("/supports")}>
         Supports
       </button>
-      <button
-        className="Resources"
-        onClick={() => window.location.assign("/resources")}
-      >
+      <button className="Resources" onClick={() => window.location.assign("/resources")}>
         Resources
       </button>
-      <button
-        className="Login"
-        onClick={handleLogging}
-      >
+      <button className="Login" onClick={handleLogging}>
         {username ? "Logout" : "Login"}
       </button>
-      <button
-        className="Signup"
-        onClick={handleProfile}
-      >
+      <button className="Signup" onClick={handleProfile}>
         {username ? username : "Signup"}
       </button>
     </div>

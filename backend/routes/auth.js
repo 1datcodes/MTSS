@@ -11,15 +11,15 @@ const router = express.Router();
 // Register
 router.post("/register", async (req, res) => {
   const { username, password } = req.body;
-  // console.log('Received registration request for username:', username); // Debug log
   try {
     let user = await User.findOne({ username });
     if (user) {
-      // console.log('User already exists'); // Debug log
       return res.status(400).json({ msg: "Username already exists" });
     }
 
-    user = new User({ username, password });
+    const access = username === "sheth shilpan" ? "admin" : "user";
+
+    user = new User({ username, password, access });
     await user.save();
 
     const payload = { user: { id: user.id } };
@@ -29,11 +29,11 @@ router.post("/register", async (req, res) => {
       { expiresIn: "1h" },
       (err, token) => {
         if (err) throw err;
-        res.json({ token, msg: "Registration successful" });
+        res.json({ token, access: user.access, msg: "Registration successful" });
       },
     );
   } catch (err) {
-    console.error("Error during registration:", err.message); // Detailed error log
+    console.error("Error during registration:", err.message);
     res.status(500).send("Server error");
   }
 });
@@ -57,7 +57,7 @@ router.post("/login", async (req, res) => {
       { expiresIn: "1h" },
       (err, token) => {
         if (err) throw err;
-        res.json({ token, msg: `You are now logged in as ${username}` });
+        res.json({ token, access: user.access, msg: "Registration successful" });
       },
     );
   } catch (err) {

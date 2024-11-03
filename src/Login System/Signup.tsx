@@ -7,13 +7,18 @@ import "./Login.css";
 const Signup = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
-  const { setUsername: setAuthUsername } = useAuth();
+  const { setUsername: setAuthUsername, setAccess } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!username || !password) {
       setMessage("Username and password cannot be blank");
+      return;
+    }
+    if (password !== confirmPassword) {
+      setMessage("Passwords do not match");
       return;
     }
     try {
@@ -26,12 +31,21 @@ const Signup = () => {
         },
       );
       localStorage.setItem("token", res.data.token);
-      setMessage(res.data.msg); // Set success message
-      setAuthUsername(username); // Set the username in AuthContext
-      // Optionally, redirect to home page or dashboard
+      localStorage.setItem("username", username);
+      localStorage.setItem("access", res.data.access);
+
+      setMessage(res.data.msg);
+      setAuthUsername(username);
+      setAccess(res.data.access);
+
+      window.location.assign("/profile");
     } catch (err) {
       console.error(err);
-      setMessage((err as any).response.data.msg); // Set error message
+      if (axios.isAxiosError(err) && err.response && err.response.data && err.response.data.msg) {
+        setMessage(err.response.data.msg);
+      } else {
+        setMessage("Registration failed. Please try again.");
+      }
     }
   };
 
@@ -55,12 +69,18 @@ const Signup = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <input
+            className="ConfirmPassword"
+            type="password"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
           <button className="Submit" type="submit">
             Sign Up
           </button>
         </form>
-        {message && <p className="Login-message">{message}</p>}{" "}
-        {/* Display message */}
+        {message && <p className="Login-message">{message}</p>}
       </div>
     </div>
   );
