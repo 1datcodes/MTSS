@@ -26,9 +26,13 @@ const Signup = () => {
         },
       );
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("username", username); // Store username in localStorage
+
       setMessage(res.data.msg); // Set success message
       setAuthUsername(username); // Set the username in AuthContext
       // Optionally, redirect to home page or dashboard
+
+      window.location.assign("/profile"); // Redirect to profile
     } catch (err) {
       console.error(err);
       setMessage((err as any).response.data.msg); // Set error message
