@@ -1,5 +1,6 @@
 import { EditorContent, useEditor, BubbleMenu, FloatingMenu } from "@tiptap/react";
 import { useState, useEffect, useCallback } from "react";
+import axios from "axios";
 
 // Extensions
 import StarterKit from "@tiptap/starter-kit";
@@ -32,16 +33,38 @@ function Editor({ pageName }: { pageName: string }) {
       }),
       Typography,
     ],
-    onUpdate: ({ editor }) => {
+    onUpdate: async ({ editor }) => {
       const html = editor.getHTML();
       localStorage.setItem(pageName, html);
+
+      try {
+        const devPortID = import.meta.env.VITE_DEV_PORT;
+        await axios.post(`http://localhost:${devPortID}/api/auth/save-content`, {
+          pageName,
+          content: html,
+        });
+      } catch (err) {
+        console.error("Error saving content:", err);
+      }
     },
   });
 
   useEffect(() => {
-    if (editor) {
-      editor.commands.setContent(localStorage.getItem(pageName));
-    }
+    const fetchContent = async () => {
+      try {
+        const devPortID = import.meta.env.VITE_DEV_PORT;
+        const res = await axios.get(`http://localhost:${devPortID}/api/auth/get-content`, {
+          params: { pageName },
+        });
+        if (res.data.content) {
+          editor?.commands.setContent(res.data.content);
+        }
+      } catch (err) {
+        console.error("Error fetching content:", err);
+      }
+    };
+
+    fetchContent();
   }, [pageName, editor]);
 
   const setLink = useCallback(() => {
