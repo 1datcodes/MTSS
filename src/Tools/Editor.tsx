@@ -1,12 +1,16 @@
 import { EditorContent, useEditor, BubbleMenu, FloatingMenu } from "@tiptap/react";
-import { useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
 import Image from "@tiptap/extension-image";
 import ImageResize from "tiptap-extension-resize-image";
+import Youtube from "@tiptap/extension-youtube";
 import "./Editor.css";
 
 function Editor({ pageName }: { pageName: string }) {
+  const [height, setHeight] = useState("480");
+  const [width, setWidth] = useState("640");
+
   const editor = useEditor({
     content: localStorage.getItem(pageName),
     extensions: [
@@ -18,6 +22,10 @@ function Editor({ pageName }: { pageName: string }) {
       }),
       Image,
       ImageResize,
+      Youtube.configure({
+        controls: false,
+        nocookie: true,
+      }),
     ],
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
@@ -32,8 +40,8 @@ function Editor({ pageName }: { pageName: string }) {
   }, [pageName, editor]);
 
   const setLink = useCallback(() => {
-    const previousURL = editor?.getAttributes("link").href;
-    const url = window.prompt("URL", previousURL);
+    const previousURL = editor?.getAttributes("link").href || "https://example.com";
+    const url = window.prompt("Paste the full URL", previousURL);
 
     if (url === null) {
       return;
@@ -49,12 +57,27 @@ function Editor({ pageName }: { pageName: string }) {
   }, [editor]);
 
   const addImage = useCallback(() => {
-    const url = window.prompt("URL");
+    const url = window.prompt("Paste the Image URL", "https://example.com/image.jpg");
 
     if (url) {
       editor?.chain().focus().setImage({ src: url }).run();
     }
   }, [editor]);
+
+  const addYoutube = () => {
+    const url = prompt("Paste the Youtube URL", "https://youtu.be/dQw4w9WgXcQ"); // Hidden Rick Roll
+
+    // Add function to get width and height from user input
+
+    if (url) {
+      editor?.commands.setYoutubeVideo({
+        src: url,
+        width: Math.max(320, parseInt(width, 10)) || 640,
+        height: Math.max(180, parseInt(height, 10)) || 480,
+      })
+    }
+
+  }
 
   return (
     <div className="Content">
@@ -154,7 +177,12 @@ function Editor({ pageName }: { pageName: string }) {
             <button
               onClick={() => addImage()}
             >
-              Set Image
+              Add Image
+            </button>
+            <button 
+              onClick={addYoutube}
+              className="YoutubeButton">
+                Insert Video
             </button>
             <button
               onClick={() => editor.chain().focus().undo().run()}
@@ -227,6 +255,11 @@ function Editor({ pageName }: { pageName: string }) {
               }}
               className={editor.isActive("link") ? "is-active" : ""}>
                 Link
+            </button>
+            <button 
+              onClick={addYoutube}
+              className="YoutubeButton">
+                Insert Video
             </button>
           </FloatingMenu>
         </div>
