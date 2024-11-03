@@ -1,12 +1,20 @@
 import { EditorContent, useEditor, BubbleMenu, FloatingMenu } from "@tiptap/react";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import StarterKit from "@tiptap/starter-kit";
+import Link from "@tiptap/extension-link";
 import "./Editor.css";
 
 function Editor({ pageName }: { pageName: string }) {
   const editor = useEditor({
     content: localStorage.getItem(pageName),
-    extensions: [StarterKit],
+    extensions: [
+      StarterKit,
+      Link.configure({
+        openOnClick: false,
+        autolink: true,
+        defaultProtocol: "https",
+      }),
+    ],
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
       localStorage.setItem(pageName, html);
@@ -18,6 +26,23 @@ function Editor({ pageName }: { pageName: string }) {
       editor.commands.setContent(localStorage.getItem(pageName));
     }
   }, [pageName, editor]);
+
+  const setLink = useCallback(() => {
+    const previousURL = editor?.getAttributes("link").href;
+    const url = window.prompt("URL", previousURL);
+
+    if (url === null) {
+      return;
+    }
+
+    if (url === "") {
+      editor?.chain().focus().extendMarkRange("link").unsetLink().run();
+
+      return;
+    }
+
+    editor?.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
+  }, [editor]);
 
   return (
     <div className="Content">
@@ -86,6 +111,17 @@ function Editor({ pageName }: { pageName: string }) {
               H4
             </button>
             <button
+              onClick={() => {
+                if (editor.isActive("link")) {
+                  editor.chain().focus().extendMarkRange("link").unsetLink().run();
+                } else {
+                  setLink();
+                }
+              }}
+              className={editor.isActive("link") ? "is-active" : ""}>
+                Link
+            </button>
+            <button
               onClick={() => editor.chain().focus().toggleBulletList().run()}
               className={editor.isActive("bulletList") ? "is-active" : ""}
             >
@@ -135,6 +171,17 @@ function Editor({ pageName }: { pageName: string }) {
                 className={editor.isActive("strike") ? "is-active" : ""}>
                   Strike
               </button>
+              <button
+              onClick={() => {
+                if (editor.isActive("link")) {
+                  editor.chain().focus().extendMarkRange("link").unsetLink().run();
+                } else {
+                  setLink();
+                }
+              }}
+              className={editor.isActive("link") ? "is-active" : ""}>
+                Link
+            </button>
           </BubbleMenu>
           
           <FloatingMenu className="FloatingMenu" tippyOptions={{ duration: 100 }} editor={editor}>
@@ -152,6 +199,17 @@ function Editor({ pageName }: { pageName: string }) {
             onClick={() => editor.chain().focus().toggleBulletList().run()}
             className={editor.isActive("bulletList") ? "is-active" : ""}>
               Bullet List
+            </button>
+            <button
+              onClick={() => {
+                if (editor.isActive("link")) {
+                  editor.chain().focus().extendMarkRange("link").unsetLink().run();
+                } else {
+                  setLink();
+                }
+              }}
+              className={editor.isActive("link") ? "is-active" : ""}>
+                Link
             </button>
           </FloatingMenu>
         </div>

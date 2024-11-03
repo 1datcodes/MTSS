@@ -27,7 +27,7 @@
 }
 
 .Menubar button:hover:not(:disabled) {
-  background-color: #db8686;
+  background-color: #e89090;
 }
 
 .Menubar button:disabled {
@@ -36,7 +36,7 @@
 }
 
 .Menubar button.is-active {
-  background-color: #c66c6c;
+  background-color: #de7d7d;
 }
 
 .ProseMirror:focus-visible {
@@ -66,10 +66,10 @@
     }
 
     &.is-active {
-      background-color: #c66c6c;
+      background-color: #de7d7d;
 
       &:hover {
-        background-color: #db8686;
+        background-color: #e89090;
       }
     }
   }
@@ -98,10 +98,10 @@
     }
 
     &.is-active {
-      background-color: #c66c6c;
+      background-color: #de7d7d;
 
       &:hover {
-        background-color: #db8686;
+        background-color: #e89090;
       }
     }
   }
