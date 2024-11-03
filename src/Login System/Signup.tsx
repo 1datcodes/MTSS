@@ -8,7 +8,7 @@ const Signup = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const { setUsername: setAuthUsername } = useAuth();
+  const { setUsername: setAuthUsername, setAccess } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,16 +26,21 @@ const Signup = () => {
         },
       );
       localStorage.setItem("token", res.data.token);
-      localStorage.setItem("username", username); // Store username in localStorage
+      localStorage.setItem("username", username);
+      localStorage.setItem("access", res.data.access);
 
-      setMessage(res.data.msg); // Set success message
-      setAuthUsername(username); // Set the username in AuthContext
-      // Optionally, redirect to home page or dashboard
+      setMessage(res.data.msg);
+      setAuthUsername(username);
+      setAccess(res.data.access);
 
-      window.location.assign("/profile"); // Redirect to profile
+      window.location.assign("/profile");
     } catch (err) {
       console.error(err);
-      setMessage((err as any).response.data.msg); // Set error message
+      if (axios.isAxiosError(err) && err.response && err.response.data && err.response.data.msg) {
+        setMessage(err.response.data.msg);
+      } else {
+        setMessage("Registration failed. Please try again.");
+      }
     }
   };
 
@@ -63,8 +68,7 @@ const Signup = () => {
             Sign Up
           </button>
         </form>
-        {message && <p className="Login-message">{message}</p>}{" "}
-        {/* Display message */}
+        {message && <p className="Login-message">{message}</p>}
       </div>
     </div>
   );
