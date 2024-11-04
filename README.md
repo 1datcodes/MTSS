@@ -15,7 +15,7 @@ Important: Make sure to ask for the .env file to Kaicheng or Michi since it stor
   - Login system works by using MongoDB
   - Login persists through local storage (stays logged in even after closing browser)
   - **To do**:
-    - Save changes on the content to a database so that it changes for all users _(Implemented in V0.1.4)_
+    - Save changes on the content to a database so that it changes for all users _(Implemented in V0.2.0)_
     - Authorize access to editor for Admins and don't allow others _(Implemented in V0.1.1)_
     - Migrate user authentication to an authentication provider like Auth0 for more security
     - Add functionality to the editor like links, images, and videos _(Implemented in V0.1.3)_
@@ -43,5 +43,5 @@ Important: Make sure to ask for the .env file to Kaicheng or Michi since it stor
   - **To do**:
     - Make the menu bar stay in place so that it's more accessible
 
-- Version 0.1.4
+- Version 0.2.0
   - Saved content to database, instead of localStorage
