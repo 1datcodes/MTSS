@@ -18,11 +18,8 @@ import Typography from "@tiptap/extension-typography";
 import "./Editor.css";
 
 function Editor({ pageName }: { pageName: string }) {
-  const [height, setHeight] = useState("480");
-  const [width, setWidth] = useState("640");
-
-  setWidth("640");
-  setHeight("480");
+  const [height] = useState("480");
+  const [width] = useState("640");
 
   const editor = useEditor({
     content: localStorage.getItem(pageName),
