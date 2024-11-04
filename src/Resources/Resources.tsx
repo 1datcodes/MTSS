@@ -11,9 +11,12 @@ function Resources() {
     const fetchContent = async () => {
       try {
         const devPortID = import.meta.env.VITE_DEV_PORT;
-        const res = await axios.get(`http://localhost:${devPortID}/api/auth/get-content`, {
-          params: { pageName: "Resources" },
-        });
+        const res = await axios.get(
+          `http://localhost:${devPortID}/api/auth/get-content`,
+          {
+            params: { pageName: "Resources" },
+          },
+        );
         setContent(res.data.content);
       } catch (err) {
         console.error("Error fetching content:", err);
@@ -29,7 +32,10 @@ function Resources() {
       {access === "admin" ? (
         <Editor pageName="Resources" />
       ) : (
-        <div className="Content" dangerouslySetInnerHTML={{ __html: content }} />
+        <div
+          className="Content"
+          dangerouslySetInnerHTML={{ __html: content }}
+        />
       )}
     </div>
   );

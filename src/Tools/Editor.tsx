@@ -1,4 +1,9 @@
-import { EditorContent, useEditor, BubbleMenu, FloatingMenu } from "@tiptap/react";
+import {
+  EditorContent,
+  useEditor,
+  BubbleMenu,
+  FloatingMenu,
+} from "@tiptap/react";
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
@@ -42,10 +47,13 @@ function Editor({ pageName }: { pageName: string }) {
 
       try {
         const devPortID = import.meta.env.VITE_DEV_PORT;
-        await axios.post(`http://localhost:${devPortID}/api/auth/save-content`, {
-          pageName,
-          content: html,
-        });
+        await axios.post(
+          `http://localhost:${devPortID}/api/auth/save-content`,
+          {
+            pageName,
+            content: html,
+          },
+        );
       } catch (err) {
         console.error("Error saving content:", err);
       }
@@ -56,9 +64,12 @@ function Editor({ pageName }: { pageName: string }) {
     const fetchContent = async () => {
       try {
         const devPortID = import.meta.env.VITE_DEV_PORT;
-        const res = await axios.get(`http://localhost:${devPortID}/api/auth/get-content`, {
-          params: { pageName },
-        });
+        const res = await axios.get(
+          `http://localhost:${devPortID}/api/auth/get-content`,
+          {
+            params: { pageName },
+          },
+        );
         if (res.data.content) {
           editor?.commands.setContent(res.data.content);
         }
@@ -71,7 +82,8 @@ function Editor({ pageName }: { pageName: string }) {
   }, [pageName, editor]);
 
   const setLink = useCallback(() => {
-    const previousURL = editor?.getAttributes("link").href || "https://example.com";
+    const previousURL =
+      editor?.getAttributes("link").href || "https://example.com";
     const url = window.prompt("Paste the full URL", previousURL);
 
     if (url === null) {
@@ -84,11 +96,19 @@ function Editor({ pageName }: { pageName: string }) {
       return;
     }
 
-    editor?.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
+    editor
+      ?.chain()
+      .focus()
+      .extendMarkRange("link")
+      .setLink({ href: url })
+      .run();
   }, [editor]);
 
   const addImage = useCallback(() => {
-    const url = window.prompt("Paste the Image URL", "https://example.com/image.jpg");
+    const url = window.prompt(
+      "Paste the Image URL",
+      "https://example.com/image.jpg",
+    );
 
     if (url) {
       editor?.chain().focus().setImage({ src: url }).run();
@@ -105,10 +125,9 @@ function Editor({ pageName }: { pageName: string }) {
         src: url,
         width: Math.max(320, parseInt(width, 10)) || 640,
         height: Math.max(180, parseInt(height, 10)) || 480,
-      })
+      });
     }
-
-  }
+  };
 
   return (
     <div className="Content">
@@ -179,13 +198,19 @@ function Editor({ pageName }: { pageName: string }) {
             <button
               onClick={() => {
                 if (editor.isActive("link")) {
-                  editor.chain().focus().extendMarkRange("link").unsetLink().run();
+                  editor
+                    .chain()
+                    .focus()
+                    .extendMarkRange("link")
+                    .unsetLink()
+                    .run();
                 } else {
                   setLink();
                 }
               }}
-              className={editor.isActive("link") ? "is-active" : ""}>
-                Link
+              className={editor.isActive("link") ? "is-active" : ""}
+            >
+              Link
             </button>
             <button
               onClick={() => editor.chain().focus().toggleBulletList().run()}
@@ -205,15 +230,9 @@ function Editor({ pageName }: { pageName: string }) {
             >
               Quote
             </button>
-            <button
-              onClick={() => addImage()}
-            >
-              Add Image
-            </button>
-            <button 
-              onClick={addYoutube}
-              className="YoutubeButton">
-                Insert Video
+            <button onClick={() => addImage()}>Add Image</button>
+            <button onClick={addYoutube} className="YoutubeButton">
+              Insert Video
             </button>
             <button
               onClick={() => editor.chain().focus().undo().run()}
@@ -228,69 +247,101 @@ function Editor({ pageName }: { pageName: string }) {
               Redo
             </button>
           </div>
-          <BubbleMenu className="BubbleMenu" tippyOptions={{ duration: 100 }} editor={editor}>
-              <button
-                onClick={() => editor.chain().focus().toggleBold().run()}
-                disabled={!editor.can().chain().focus().toggleBold().run()}
-                className={editor.isActive("bold") ? "is-active" : ""}>
-                  Bold
-              </button>
-              <button
-                onClick={() => editor.chain().focus().toggleItalic().run()}
-                disabled={!editor.can().chain().focus().toggleItalic().run()}
-                className={editor.isActive("italic") ? "is-active" : ""}>
-                  Italic
-              </button>
-              <button
-                onClick={() => editor.chain().focus().toggleStrike().run()}
-                disabled={!editor.can().chain().focus().toggleStrike().run()}
-                className={editor.isActive("strike") ? "is-active" : ""}>
-                  Strike
-              </button>
-              <button
+          <BubbleMenu
+            className="BubbleMenu"
+            tippyOptions={{ duration: 100 }}
+            editor={editor}
+          >
+            <button
+              onClick={() => editor.chain().focus().toggleBold().run()}
+              disabled={!editor.can().chain().focus().toggleBold().run()}
+              className={editor.isActive("bold") ? "is-active" : ""}
+            >
+              Bold
+            </button>
+            <button
+              onClick={() => editor.chain().focus().toggleItalic().run()}
+              disabled={!editor.can().chain().focus().toggleItalic().run()}
+              className={editor.isActive("italic") ? "is-active" : ""}
+            >
+              Italic
+            </button>
+            <button
+              onClick={() => editor.chain().focus().toggleStrike().run()}
+              disabled={!editor.can().chain().focus().toggleStrike().run()}
+              className={editor.isActive("strike") ? "is-active" : ""}
+            >
+              Strike
+            </button>
+            <button
               onClick={() => {
                 if (editor.isActive("link")) {
-                  editor.chain().focus().extendMarkRange("link").unsetLink().run();
+                  editor
+                    .chain()
+                    .focus()
+                    .extendMarkRange("link")
+                    .unsetLink()
+                    .run();
                 } else {
                   setLink();
                 }
               }}
-              className={editor.isActive("link") ? "is-active" : ""}>
-                Link
+              className={editor.isActive("link") ? "is-active" : ""}
+            >
+              Link
             </button>
           </BubbleMenu>
-          
-          <FloatingMenu className="FloatingMenu" tippyOptions={{ duration: 100 }} editor={editor}>
+
+          <FloatingMenu
+            className="FloatingMenu"
+            tippyOptions={{ duration: 100 }}
+            editor={editor}
+          >
             <button
-              onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-              className={editor.isActive("heading", { level: 1 }) ? "is-active" : ""}>
-                H1
+              onClick={() =>
+                editor.chain().focus().toggleHeading({ level: 1 }).run()
+              }
+              className={
+                editor.isActive("heading", { level: 1 }) ? "is-active" : ""
+              }
+            >
+              H1
             </button>
             <button
-              onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-              className={editor.isActive("heading", { level: 2 }) ? "is-active" : ""}>
-                H2
+              onClick={() =>
+                editor.chain().focus().toggleHeading({ level: 2 }).run()
+              }
+              className={
+                editor.isActive("heading", { level: 2 }) ? "is-active" : ""
+              }
+            >
+              H2
             </button>
             <button
-            onClick={() => editor.chain().focus().toggleBulletList().run()}
-            className={editor.isActive("bulletList") ? "is-active" : ""}>
+              onClick={() => editor.chain().focus().toggleBulletList().run()}
+              className={editor.isActive("bulletList") ? "is-active" : ""}
+            >
               Bullet List
             </button>
             <button
               onClick={() => {
                 if (editor.isActive("link")) {
-                  editor.chain().focus().extendMarkRange("link").unsetLink().run();
+                  editor
+                    .chain()
+                    .focus()
+                    .extendMarkRange("link")
+                    .unsetLink()
+                    .run();
                 } else {
                   setLink();
                 }
               }}
-              className={editor.isActive("link") ? "is-active" : ""}>
-                Link
+              className={editor.isActive("link") ? "is-active" : ""}
+            >
+              Link
             </button>
-            <button 
-              onClick={addYoutube}
-              className="YoutubeButton">
-                Insert Video
+            <button onClick={addYoutube} className="YoutubeButton">
+              Insert Video
             </button>
           </FloatingMenu>
         </div>

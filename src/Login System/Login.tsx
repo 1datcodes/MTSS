@@ -22,8 +22,8 @@ const Login = () => {
         },
       );
       localStorage.setItem("token", res.data.token);
-      localStorage.setItem("username", username); 
-      localStorage.setItem("access", res.data.access); 
+      localStorage.setItem("username", username);
+      localStorage.setItem("access", res.data.access);
 
       setMessage(res.data.msg); // Set success message
       setAuthUsername(username); // Set the username in AuthContext

@@ -11,9 +11,12 @@ function Supports() {
     const fetchContent = async () => {
       try {
         const devPortID = import.meta.env.VITE_DEV_PORT;
-        const res = await axios.get(`http://localhost:${devPortID}/api/auth/get-content`, {
-          params: { pageName: "Supports" },
-        });
+        const res = await axios.get(
+          `http://localhost:${devPortID}/api/auth/get-content`,
+          {
+            params: { pageName: "Supports" },
+          },
+        );
         setContent(res.data.content);
       } catch (err) {
         console.error("Error fetching content:", err);
@@ -29,7 +32,10 @@ function Supports() {
       {access === "admin" ? (
         <Editor pageName="Supports" />
       ) : (
-        <div className="Content" dangerouslySetInnerHTML={{ __html: content }} />
+        <div
+          className="Content"
+          dangerouslySetInnerHTML={{ __html: content }}
+        />
       )}
     </div>
   );

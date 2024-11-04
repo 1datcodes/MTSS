@@ -41,7 +41,12 @@ const Signup = () => {
       window.location.assign("/profile");
     } catch (err) {
       console.error(err);
-      if (axios.isAxiosError(err) && err.response && err.response.data && err.response.data.msg) {
+      if (
+        axios.isAxiosError(err) &&
+        err.response &&
+        err.response.data &&
+        err.response.data.msg
+      ) {
         setMessage(err.response.data.msg);
       } else {
         setMessage("Registration failed. Please try again.");

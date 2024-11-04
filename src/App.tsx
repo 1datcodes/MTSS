@@ -24,7 +24,12 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/resources" element={<Resources />} />
         <Route path="/supports" element={<Supports />} />
-        <Route path="/profile" element={localStorage.getItem("username") ? <Profile /> : <Navigate to="/" />} />
+        <Route
+          path="/profile"
+          element={
+            localStorage.getItem("username") ? <Profile /> : <Navigate to="/" />
+          }
+        />
       </Routes>
     </Router>
   );
