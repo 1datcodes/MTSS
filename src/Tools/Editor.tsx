@@ -16,6 +16,9 @@ function Editor({ pageName }: { pageName: string }) {
   const [height, setHeight] = useState("480");
   const [width, setWidth] = useState("640");
 
+  setWidth("640");
+  setHeight("480");
+
   const editor = useEditor({
     content: localStorage.getItem(pageName),
     extensions: [
