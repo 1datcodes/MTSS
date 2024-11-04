@@ -14,22 +14,34 @@ Important: Make sure to ask for the .env file to Kaicheng or Michi since it stor
   - WYSIWYG editor works using React TipTap and saves to local storage (storage on your browser)
   - Login system works by using MongoDB
   - Login persists through local storage (stays logged in even after closing browser)
-  - To do:
-    - Save changes on the content to a database so that it changes for all users
-    - Authorize access to editor for Admins and don't allow others (Implemented in V0.1.1)
+  - **To do**:
+    - Save changes on the content to a database so that it changes for all users _(Implemented in V0.2.0)_
+    - Authorize access to editor for Admins and don't allow others _(Implemented in V0.1.1)_
     - Migrate user authentication to an authentication provider like Auth0 for more security
-    - Add functionality to the editor like links, images, and videos
+    - Add functionality to the editor like links, images, and videos _(Implemented in V0.1.3)_
     - Make the website pop out by styling the page
 
 - Version 0.1.1
 
   - Added Profile page where users can view their username and access type
   - Only users with admin permission can edit pages now (currently sheth shilpan)
-  - To do:
-    - Look for admin permission through database (Implemented in V0.1.2)
+  - **To do**:
+    - Look for admin permission through database _(Implemented in V0.1.2)_
 
 - Version 0.1.2
+
   - Implemented permissions in database rather than in localstorage
   - Added confirm password in sign up
   - To do:
     - Figure out how to host the database and website (through netlify maybe)
+
+- Version 0.1.3
+
+  - Added the ability to add Hyperlinks, Images, and Videos from the editor
+  - Typography is now supported
+  - _Important_: Adding files requires a premium subscription to TipTap
+  - **To do**:
+    - Make the menu bar stay in place so that it's more accessible
+
+- Version 0.2.0
+  - Saved content to database, instead of localStorage

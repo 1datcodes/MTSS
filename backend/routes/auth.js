@@ -2,6 +2,7 @@ import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
+import Content from "../models/content.js"; // Import the Content model
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -62,6 +63,41 @@ router.post("/login", async (req, res) => {
     );
   } catch (err) {
     console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
+// Save content
+router.post("/save-content", async (req, res) => {
+  const { pageName, content } = req.body;
+  try {
+    let pageContent = await Content.findOne({ pageName });
+    if (pageContent) {
+      pageContent.content = content;
+      await pageContent.save();
+    } else {
+      pageContent = new Content({ pageName, content });
+      await pageContent.save();
+    }
+    res.json({ msg: "Content saved successfully" });
+  } catch (err) {
+    console.error("Error saving content:", err.message);
+    res.status(500).send("Server error");
+  }
+});
+
+// Get content
+router.get("/get-content", async (req, res) => {
+  const { pageName } = req.query;
+  try {
+    const pageContent = await Content.findOne({ pageName });
+    if (pageContent) {
+      res.json({ content: pageContent.content });
+    } else {
+      res.json({ content: "" });
+    }
+  } catch (err) {
+    console.error("Error fetching content:", err.message);
     res.status(500).send("Server error");
   }
 });

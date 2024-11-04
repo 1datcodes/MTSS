@@ -1,4 +1,5 @@
 .Menubar {
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
@@ -7,6 +8,10 @@
   padding: 0 10px;
   color: white;
   font-size: 1.2em;
+  z-index: 999;
+  background-color: rgba(255, 255, 255, 0.9);
+  position: relative;
+  top: 0;
 }
 
 .Menubar button {
@@ -22,7 +27,7 @@
 }
 
 .Menubar button:hover:not(:disabled) {
-  background-color: #db8686;
+  background-color: #e89090;
 }
 
 .Menubar button:disabled {
@@ -31,9 +36,73 @@
 }
 
 .Menubar button.is-active {
-  background-color: #c66c6c;
+  background-color: #de7d7d;
 }
 
 .ProseMirror:focus-visible {
   outline-offset: 0.4rem;
+}
+
+.BubbleMenu {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 0.6rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 0.2rem;
+  padding: 0.3rem;
+  
+  button {
+    background-color: white;
+    border: none;
+    border-radius: 0.3rem;
+    padding: 0.275rem 0.425rem;
+    transition: all 0.1s ease-in-out;
+
+    &:hover {
+      background-color: #d6d5d5c7;
+    }
+
+    &.is-active {
+      background-color: #de7d7d;
+
+      &:hover {
+        background-color: #e89090;
+      }
+    }
+  }
+}
+
+.FloatingMenu {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 0.6rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 0.2rem;
+  padding: 0.3rem;
+  
+  button {
+    background-color: white;
+    border: none;
+    border-radius: 0.3rem;
+    padding: 0.275rem 0.425rem;
+    transition: all 0.1s ease-in-out;
+
+    &:hover {
+      background-color: #d6d5d5c7;
+    }
+
+    &.is-active {
+      background-color: #de7d7d;
+
+      &:hover {
+        background-color: #e89090;
+      }
+    }
+  }
 }
