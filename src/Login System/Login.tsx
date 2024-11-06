@@ -4,6 +4,9 @@ import { useAuth } from "./AuthContext";
 import Navbar from "../Tools/Navbar";
 import "./Login.css";
 
+// const devPortID = import.meta.env.VITE_DEV_PORT;
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -13,9 +16,9 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const devPortID = import.meta.env.VITE_DEV_PORT;
       const res = await axios.post(
-        `http://localhost:${devPortID}/api/auth/login`,
+        // `http://localhost:${devPortID}/api/auth/login`,
+        `${API_BASE_URL}/api/auth/login`,
         {
           username,
           password,
