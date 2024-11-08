@@ -30,7 +30,11 @@ router.post("/register", async (req, res) => {
       { expiresIn: "1h" },
       (err, token) => {
         if (err) throw err;
-        res.json({ token, access: user.access, msg: "Registration successful" });
+        res.json({
+          token,
+          access: user.access,
+          msg: "Registration successful",
+        });
       },
     );
   } catch (err) {
@@ -58,7 +62,11 @@ router.post("/login", async (req, res) => {
       { expiresIn: "1h" },
       (err, token) => {
         if (err) throw err;
-        res.json({ token, access: user.access, msg: "Registration successful" });
+        res.json({
+          token,
+          access: user.access,
+          msg: "Login successful",
+        });
       },
     );
   } catch (err) {

@@ -3,6 +3,9 @@ import axios from "axios";
 import Editor from "../Tools/Editor";
 import Navbar from "../Tools/Navbar";
 
+// const devPortID = import.meta.env.VITE_DEV_PORT;
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 function Supports() {
   const access = localStorage.getItem("access");
   const [content, setContent] = useState<string>("");
@@ -10,10 +13,13 @@ function Supports() {
   useEffect(() => {
     const fetchContent = async () => {
       try {
-        const devPortID = import.meta.env.VITE_DEV_PORT;
-        const res = await axios.get(`http://localhost:${devPortID}/api/auth/get-content`, {
-          params: { pageName: "Supports" },
-        });
+        const res = await axios.get(
+          // `http://localhost:${devPortID}/api/auth/get-content`,
+          `${API_BASE_URL}/api/auth/get-content`,
+          {
+            params: { pageName: "Supports" },
+          },
+        );
         setContent(res.data.content);
       } catch (err) {
         console.error("Error fetching content:", err);
@@ -29,7 +35,10 @@ function Supports() {
       {access === "admin" ? (
         <Editor pageName="Supports" />
       ) : (
-        <div className="Content" dangerouslySetInnerHTML={{ __html: content }} />
+        <div
+          className="Content"
+          dangerouslySetInnerHTML={{ __html: content }}
+        />
       )}
     </div>
   );

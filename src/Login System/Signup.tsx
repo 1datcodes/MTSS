@@ -4,6 +4,9 @@ import { useAuth } from "./AuthContext";
 import Navbar from "../Tools/Navbar";
 import "./Login.css";
 
+// const devPortID = import.meta.env.VITE_DEV_PORT;
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 const Signup = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -22,9 +25,9 @@ const Signup = () => {
       return;
     }
     try {
-      const devPortID = import.meta.env.VITE_DEV_PORT;
       const res = await axios.post(
-        `http://localhost:${devPortID}/api/auth/register`,
+        // `http://localhost:${devPortID}/api/auth/register`,
+        `${API_BASE_URL}/api/auth/register`,
         {
           username,
           password,
@@ -41,7 +44,12 @@ const Signup = () => {
       window.location.assign("/profile");
     } catch (err) {
       console.error(err);
-      if (axios.isAxiosError(err) && err.response && err.response.data && err.response.data.msg) {
+      if (
+        axios.isAxiosError(err) &&
+        err.response &&
+        err.response.data &&
+        err.response.data.msg
+      ) {
         setMessage(err.response.data.msg);
       } else {
         setMessage("Registration failed. Please try again.");
