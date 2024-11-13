@@ -1,5 +1,6 @@
 import { useAuth } from "../Login System/AuthContext";
 import "./Navbar.css";
+import logo from "../MTSS.png";
 
 const Navbar = () => {
   const { username, setUsername, setAccess } = useAuth();
@@ -27,6 +28,9 @@ const Navbar = () => {
 
   return (
     <div className="Navbar">
+      <button className="Home" onClick={() => window.location.assign("/")}>
+        <img src={logo} class="logo" />
+      </button>
       <button className="Home" onClick={() => window.location.assign("/")}>
         Home
       </button>
