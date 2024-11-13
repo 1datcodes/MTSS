@@ -46,7 +46,7 @@ function Editor({ pageName }: { pageName: string }) {
       Typography,
       TextStyle,
       FontFamily.configure({
-        types: ['textStyle'],
+        types: ["textStyle"],
       }),
     ],
     onUpdate: async ({ editor }) => {
@@ -99,11 +99,12 @@ function Editor({ pageName }: { pageName: string }) {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
-    }
+    };
   }, [menuRef]);
 
   const handleFontChange = (font: string) => {
     setFont(font);
+    setShowFontButtons(false);
     editor?.chain().focus().setFontFamily(font).run();
   };
 
@@ -160,18 +161,21 @@ function Editor({ pageName }: { pageName: string }) {
       {editor && (
         <div className="Tools">
           <div className="Menubar" ref={menuRef}>
-          <button style={{fontFamily: font}} onClick={() => setShowFontButtons(!showFontButtons)}>
-            {font}
-          </button>
-          {showFontButtons && (
-            <div className="FontButtons">
-              {fonts.map((font) => (
-                <button key={font} onClick={() => handleFontChange(font)}>
-                  {font}
-                </button>
-              ))}
-            </div>
-          )}
+            <button
+              style={{ fontFamily: font }}
+              onClick={() => setShowFontButtons(!showFontButtons)}
+            >
+              {font}
+            </button>
+            {showFontButtons && (
+              <div className="FontButtons">
+                {fonts.map((font) => (
+                  <button key={font} onClick={() => handleFontChange(font)}>
+                    {font}
+                  </button>
+                ))}
+              </div>
+            )}
             <button
               onClick={() => editor.chain().focus().toggleBold().run()}
               disabled={!editor.can().chain().focus().toggleBold().run()}
@@ -284,9 +288,9 @@ function Editor({ pageName }: { pageName: string }) {
                 viewBox="0 0 24 24"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M6 6a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3a3 3 0 0 1-3 3H5a1 1 0 1 0 0 2h1a5 5 0 0 0 5-5V8a2 2 0 0 0-2-2H6Zm9 0a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3a3 3 0 0 1-3 3h-1a1 1 0 1 0 0 2h1a5 5 0 0 0 5-5V8a2 2 0 0 0-2-2h-3Z"
-                  clip-rule="evenodd"
+                  clipRule="evenodd"
                 />
               </svg>
             </button>
