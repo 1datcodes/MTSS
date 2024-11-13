@@ -4,7 +4,7 @@ import {
   BubbleMenu,
   FloatingMenu,
 } from "@tiptap/react";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import axios from "axios";
 
 // Extensions
@@ -14,12 +14,19 @@ import Image from "@tiptap/extension-image";
 import ImageResize from "tiptap-extension-resize-image";
 import Youtube from "@tiptap/extension-youtube";
 import Typography from "@tiptap/extension-typography";
+import TextStyle from "@tiptap/extension-text-style";
+import FontFamily from "@tiptap/extension-font-family";
 
 import "./Editor.css";
 
 function Editor({ pageName }: { pageName: string }) {
+  const fonts = ["Arial", "Courier", "Georgia", "Times New Roman", "Verdana"];
+  const menuRef = useRef<HTMLDivElement>(null);
+
   const [height] = useState("480");
   const [width] = useState("640");
+  const [showFontButtons, setShowFontButtons] = useState(false);
+  const [font, setFont] = useState("Arial");
 
   const editor = useEditor({
     content: localStorage.getItem(pageName),
@@ -37,6 +44,10 @@ function Editor({ pageName }: { pageName: string }) {
         nocookie: true,
       }),
       Typography,
+      TextStyle,
+      FontFamily.configure({
+        types: ['textStyle'],
+      }),
     ],
     onUpdate: async ({ editor }) => {
       const html = editor.getHTML();
@@ -77,6 +88,24 @@ function Editor({ pageName }: { pageName: string }) {
 
     fetchContent();
   }, [pageName, editor]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setShowFontButtons(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+  }, [menuRef]);
+
+  const handleFontChange = (font: string) => {
+    setFont(font);
+    editor?.chain().focus().setFontFamily(font).run();
+  };
 
   const setLink = useCallback(() => {
     const previousURL =
@@ -130,7 +159,19 @@ function Editor({ pageName }: { pageName: string }) {
     <div className="Content">
       {editor && (
         <div className="Tools">
-          <div className="Menubar">
+          <div className="Menubar" ref={menuRef}>
+          <button style={{fontFamily: font}} onClick={() => setShowFontButtons(!showFontButtons)}>
+            {font}
+          </button>
+          {showFontButtons && (
+            <div className="FontButtons">
+              {fonts.map((font) => (
+                <button key={font} onClick={() => handleFontChange(font)}>
+                  {font}
+                </button>
+              ))}
+            </div>
+          )}
             <button
               onClick={() => editor.chain().focus().toggleBold().run()}
               disabled={!editor.can().chain().focus().toggleBold().run()}
