@@ -19,7 +19,7 @@ Important: Make sure to ask for the `.env` file to Kaicheng or Michi since it st
     - Authorize access to editor for Admins and don't allow others _**(Implemented in V0.1.1)**_
     - Migrate user authentication to an authentication provider like Auth0 for more security
     - Add functionality to the editor like links, images, and videos _**(Implemented in V0.1.3)**_
-    - Make the website pop out by styling the page
+    - Make the website pop out by styling the page _**(Implemented in V1.0.1)**_
 
 - ## Version 0.1.1
 
@@ -58,3 +58,15 @@ Important: Make sure to ask for the `.env` file to Kaicheng or Michi since it st
     - Make the Nav bar editable
     - Make it possible to create new pages
     - Make it possible to divide a page into different segments
+
+- ## Version 1.0.1
+
+  - Added font selection
+  - Stylized the editor menu button
+  - Removed heading selection
+  - **Bug**:
+    - Website isn't properly hosted
+    - Mr. Paley will find us a mentor to do that
+  - **Todo**:
+    - Figure out a way to change text size or integrate headings
+    - Make the prompt for video and image upload look better
