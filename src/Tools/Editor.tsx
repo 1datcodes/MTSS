@@ -19,6 +19,8 @@ import FontFamily from "@tiptap/extension-font-family";
 
 import "./Editor.css";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 function Editor({ pageName }: { pageName: string }) {
   const fonts = ["Arial", "Courier", "Georgia", "Times New Roman", "Verdana"];
   const menuRef = useRef<HTMLDivElement>(null);
@@ -54,9 +56,10 @@ function Editor({ pageName }: { pageName: string }) {
       localStorage.setItem(pageName, html);
 
       try {
-        const devPortID = import.meta.env.VITE_DEV_PORT;
+        // const devPortID = import.meta.env.VITE_DEV_PORT;
         await axios.post(
-          `http://localhost:${devPortID}/api/auth/save-content`,
+          // `http://localhost:${devPortID}/api/auth/save-content`,
+          `${API_BASE_URL}/api/auth/save-content`,
           {
             pageName,
             content: html,
@@ -71,9 +74,10 @@ function Editor({ pageName }: { pageName: string }) {
   useEffect(() => {
     const fetchContent = async () => {
       try {
-        const devPortID = import.meta.env.VITE_DEV_PORT;
+        // const devPortID = import.meta.env.VITE_DEV_PORT;
         const res = await axios.get(
-          `http://localhost:${devPortID}/api/auth/get-content`,
+          // `http://localhost:${devPortID}/api/auth/get-content`,
+          `${API_BASE_URL}/api/auth/get-content`,
           {
             params: { pageName },
           },
