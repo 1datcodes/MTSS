@@ -147,3 +147,28 @@
 svg {
   fill: #6e0b0b;
 }
+
+.MoreFontsPopup {
+  position: absolute;
+  top: calc(50% + 10rem);
+  left: calc(50% - 25rem);
+  width: 50rem;
+  height: 40rem;
+  overflow-y: scroll;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 0.3rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin-top: 0.5rem;
+  z-index: 1;
+}
+
+.MoreFontsPopupContent {
+  width: 95%;
+  padding-left: 2rem;
+}
+
+.MoreFontsPopupContent button {
+  width: 100%;
+  justify-content: flex-start;
+}

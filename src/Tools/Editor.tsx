@@ -21,14 +21,50 @@ import "./Editor.css";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
-function Editor({ pageName }: { pageName: string }) {
-  const fonts = ["Arial", "Courier", "Georgia", "Times New Roman", "Verdana"];
-  const menuRef = useRef<HTMLDivElement>(null);
+const topFonts = [
+  "Arial",
+  "Helvetica",
+  "Times New Roman",
+  "Courier New",
+  "Verdana",
+  "Georgia",
+  "Palatino",
+  "Garamond",
+  "Bookman",
+  "Comic Sans MS",
+  "Trebuchet MS",
+  "Arial Black",
+  "Impact",
+  "Lucida Sans Unicode",
+  "Tahoma",
+  "Courier",
+  "Lucida Console",
+]
 
+function Editor({ pageName }: { pageName: string }) {
+  const menuRef = useRef<HTMLDivElement>(null);
+  
   const [height] = useState("480");
   const [width] = useState("640");
+  const [fonts, setFonts] = useState<string[]>([]);
   const [showFontButtons, setShowFontButtons] = useState(false);
   const [currentFont, setCurrentFont] = useState("Arial");
+  const [showMoreFonts, setShowMoreFonts] = useState(false);
+
+  useEffect(() => {
+    const fetchFonts = async () => {
+      try {
+        const res = await axios.get(
+          `https://www.googleapis.com/webfonts/v1/webfonts?key=${import.meta.env.VITE_GOOGLE_FONT_API}`
+        );
+        const fontList = res.data.items.map((font: any) => font.family);
+        setFonts(fontList);
+      } catch (err) {
+        console.error("Error fetching Google Fonts:", err);
+      };
+    };
+    fetchFonts();
+  }, []);
 
   const editor = useEditor({
     content: localStorage.getItem(pageName),
@@ -97,6 +133,7 @@ function Editor({ pageName }: { pageName: string }) {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setShowFontButtons(false);
+        setShowMoreFonts(false);
       }
     };
 
@@ -109,6 +146,7 @@ function Editor({ pageName }: { pageName: string }) {
   const handleFontChange = (font: string) => {
     setCurrentFont(font);
     setShowFontButtons(false);
+    setShowMoreFonts(false);
     editor?.chain().focus().setFontFamily(font).run();
   };
 
@@ -187,7 +225,14 @@ function Editor({ pageName }: { pageName: string }) {
             </button>
             {showFontButtons && (
               <div className="FontButtons">
-                {fonts.map((font) => (
+                <button
+                  className="MoreFonts"
+                  style={{ fontFamily: "Arial" }}
+                  onClick={() => setShowMoreFonts(true)}>
+                    More Fonts
+                </button>
+                <span style={{ borderBottom: "1px solid #dddddd" }} />
+                {topFonts.map((font: string) => (
                   <button
                     key={font}
                     style={{ fontFamily: font }}
@@ -197,6 +242,30 @@ function Editor({ pageName }: { pageName: string }) {
                     {font}
                   </button>
                 ))}
+              </div>
+            )}
+            {showMoreFonts && (
+              <div 
+                className="MoreFontsPopup">
+                <div className="MoreFontsPopupContent">
+                  <button
+                    className="ClosePopup"
+                    onClick={() => setShowMoreFonts(false)}
+                  >
+                    Close
+                  </button>
+                  <span style={{ borderBottom: "1px solid #dddddd", display: "block", height: "1px" }} />
+                  {fonts.map((fonts: string) => (
+                    <button
+                      key={fonts}
+                      style={{ fontFamily: fonts }}
+                      onClick={() => handleFontChange(fonts)}
+                    >
+                      {fonts === currentFont ? "✓ " : ""}
+                      {fonts}
+                    </button>
+                  ))}
+                  </div>
               </div>
             )}
             <button
