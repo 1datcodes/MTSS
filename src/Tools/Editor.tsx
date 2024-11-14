@@ -28,7 +28,7 @@ function Editor({ pageName }: { pageName: string }) {
   const [height] = useState("480");
   const [width] = useState("640");
   const [showFontButtons, setShowFontButtons] = useState(false);
-  const [font, setFont] = useState("Arial");
+  const [currentFont, setCurrentFont] = useState("Arial");
 
   const editor = useEditor({
     content: localStorage.getItem(pageName),
@@ -107,7 +107,7 @@ function Editor({ pageName }: { pageName: string }) {
   }, [menuRef]);
 
   const handleFontChange = (font: string) => {
-    setFont(font);
+    setCurrentFont(font);
     setShowFontButtons(false);
     editor?.chain().focus().setFontFamily(font).run();
   };
@@ -166,16 +166,20 @@ function Editor({ pageName }: { pageName: string }) {
         <div className="Tools">
           <div className="Menubar" ref={menuRef}>
             <button
-              style={{ fontFamily: font }}
+              style={{ fontFamily: currentFont }}
               onClick={() => setShowFontButtons(!showFontButtons)}
+              className="FontDropper"
             >
-              {font}
+              {currentFont}
+              <div className={"FontArrow" + (showFontButtons ? " is-active" : "")}>
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m280-400 200-200 200 200H280Z"/></svg>
+              </div>
             </button>
             {showFontButtons && (
               <div className="FontButtons">
                 {fonts.map((font) => (
-                  <button key={font} onClick={() => handleFontChange(font)}>
-                    {font}
+                  <button key={font} style={{ fontFamily: font }} onClick={() => handleFontChange(font)}>
+                    {(font === currentFont) ? "✓ " : ""}{font}
                   </button>
                 ))}
               </div>

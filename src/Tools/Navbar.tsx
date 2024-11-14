@@ -29,7 +29,7 @@ const Navbar = () => {
   return (
     <div className="Navbar">
       <button className="Home" onClick={() => window.location.assign("/")}>
-        <img src={logo} class="logo" />
+        <img src={logo} className="logo" />
       </button>
       <button className="Home" onClick={() => window.location.assign("/")}>
         Home
