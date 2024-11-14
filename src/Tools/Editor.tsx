@@ -171,15 +171,30 @@ function Editor({ pageName }: { pageName: string }) {
               className="FontDropper"
             >
               {currentFont}
-              <div className={"FontArrow" + (showFontButtons ? " is-active" : "")}>
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m280-400 200-200 200 200H280Z"/></svg>
+              <div
+                className={"FontArrow" + (showFontButtons ? " is-active" : "")}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 -960 960 960"
+                  width="24px"
+                  fill="#e8eaed"
+                >
+                  <path d="m280-400 200-200 200 200H280Z" />
+                </svg>
               </div>
             </button>
             {showFontButtons && (
               <div className="FontButtons">
                 {fonts.map((font) => (
-                  <button key={font} style={{ fontFamily: font }} onClick={() => handleFontChange(font)}>
-                    {(font === currentFont) ? "✓ " : ""}{font}
+                  <button
+                    key={font}
+                    style={{ fontFamily: font }}
+                    onClick={() => handleFontChange(font)}
+                  >
+                    {font === currentFont ? "✓ " : ""}
+                    {font}
                   </button>
                 ))}
               </div>

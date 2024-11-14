@@ -74,3 +74,7 @@ Important: Make sure to ask for the `.env` file to Kaicheng or Michi since it st
 - ## Version 1.1.0
 
   - Fixed Website hosting issue
+
+- ## Version 1.1.1
+
+  - Added Jesse's MTSS Logo
