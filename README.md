@@ -65,8 +65,12 @@ Important: Make sure to ask for the `.env` file to Kaicheng or Michi since it st
   - Stylized the editor menu button
   - Removed heading selection
   - **Bug**:
-    - Website isn't properly hosted
+    - Website isn't properly hosted _**(Resolved in V1.1.0)**_
     - Mr. Paley will find us a mentor to do that
   - **Todo**:
     - Figure out a way to change text size or integrate headings
     - Make the prompt for video and image upload look better
+
+- ## Version 1.1.0
+
+  - Fixed Website hosting issue
