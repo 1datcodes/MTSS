@@ -24,7 +24,7 @@
   h6 {
     line-height: 1.1;
     margin-top: 2.5rem;
-    text-wrap: pretty;
+    font-weight: normal;
   }
 
   h1,
@@ -34,7 +34,7 @@
   }
 
   h1 {
-    font-size: 1.4rem;
+    font-size: 2rem;
   }
 
   h2 {
@@ -42,7 +42,7 @@
   }
 
   h3 {
-    font-size: 1.1rem;
+    font-size: 0.8rem;
   }
 
   h4,

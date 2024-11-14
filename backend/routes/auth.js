@@ -65,7 +65,7 @@ router.post("/login", async (req, res) => {
         res.json({
           token,
           access: user.access,
-          msg: "Registration successful",
+          msg: "Login successful",
         });
       },
     );
