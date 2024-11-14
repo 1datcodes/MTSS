@@ -108,6 +108,14 @@
   }
 }
 
+.FontArrow {
+  transition: all 0.1s ease-in-out;
+}
+
+.FontArrow.is-active {
+  transform: rotate(180deg);
+}
+
 .FontButtons {
   display: flex;
   flex-direction: column;
@@ -117,19 +125,19 @@
   background-color: white;
   border: 1px solid #ddd;
   border-radius: 0.3rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   margin-top: 0.5rem;
   z-index: 1;
 }
 
 .FontButtons button {
-  padding: 0.5rem;
-  text-align: left;
+  justify-content: flex-start;
+  padding: 0.5rem 0.75rem;
   width: 100%;
   border: none;
   background-color: white;
   cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
 .FontButtons button:hover {
