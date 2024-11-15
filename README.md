@@ -84,4 +84,8 @@ Important: Make sure to ask for the `.env` file to Kaicheng or Michi since it st
   - Removed Floating menu and Bubble menu, deemed unnecessary
   - Added Favicon
   - **Todo**:
-    - Add font size
+    - Add font size _**(Implemented in V1.1.3)**_
+
+- ## Version 1.1.3
+
+  - Added font size

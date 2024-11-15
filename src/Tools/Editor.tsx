@@ -39,6 +39,45 @@ const topFonts = [
   "Lucida Console",
 ]
 
+const TextStyleExtended = TextStyle.extend({
+  addAttributes() {
+    return {
+      ...this.parent?.(),
+      fontSize: {
+        default: null,
+        parseHTML: (element) => element.style.fontSize.replace('px', ''),
+        renderHTML: (attributes) => {
+            if (!attributes['fontSize']) {
+                return {};
+            }
+            return {
+                style: `font-size: ${attributes['fontSize']}px`
+            };
+        }
+      }
+    }
+  },
+
+  addCommands() {
+    return {
+      ...this.parent?.(),
+      setFontSize:
+        (fontSize) =>
+        ({ commands }) => {
+          return commands.setMark(this.name, { fontSize: fontSize });
+        },
+      unsetFontSize:
+        () =>
+        ({ chain }) => {
+          return chain()
+            .setMark(this.name, { fontSize: null })
+            .removeEmptyTextStyle()
+            .run();
+        }
+    };
+  }
+});
+
 function Editor({ pageName }: { pageName: string }) {
   const menuRef = useRef<HTMLDivElement>(null);
   
@@ -81,6 +120,7 @@ function Editor({ pageName }: { pageName: string }) {
       }),
       Typography,
       TextStyle,
+      TextStyleExtended,
       FontFamily.configure({
         types: ["textStyle"],
       }),
@@ -200,71 +240,94 @@ function Editor({ pageName }: { pageName: string }) {
       {editor && (
         <div className="Tools">
           <div className="Menubar" ref={menuRef}>
-            <button
-              style={{ fontFamily: currentFont }}
-              onClick={() => toggleFontPickers(!showFontButtons, false)}
-              className="FontDropper"
-            >
-              {currentFont}
-              <div
-                className={"FontArrow" + (showFontButtons ? " is-active" : "")}
+            <div className="FontManager">
+              <button
+                style={{ fontFamily: currentFont }}
+                onClick={() => toggleFontPickers(!showFontButtons, false)}
+                className="FontDropper"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="24px"
-                  viewBox="0 -960 960 960"
-                  width="24px"
-                  fill="#e8eaed"
+                {currentFont}
+                <div
+                  className={"FontArrow" + (showFontButtons ? " is-active" : "")}
                 >
-                  <path d="m280-400 200-200 200 200H280Z" />
-                </svg>
-              </div>
-            </button>
-            {showFontButtons && (
-              <div className="FontButtons">
-                <button
-                  className="MoreFonts"
-                  style={{ fontFamily: "Arial" }}
-                  onClick={() => toggleFontPickers(false, true)}>
-                    More Fonts
-                </button>
-                <span style={{ borderBottom: "1px solid #dddddd" }} />
-                {topFonts.map((font: string) => (
-                  <button
-                    key={font}
-                    style={{ fontFamily: font }}
-                    onClick={() => handleFontChange(font)}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24px"
+                    viewBox="0 -960 960 960"
+                    width="24px"
+                    fill="#e8eaed"
                   >
-                    {font === currentFont ? "✓ " : ""}
-                    {font}
-                  </button>
-                ))}
-              </div>
-            )}
-            {showMoreFonts && (
-              <div 
-                className="MoreFontsPopup">
-                <div className="MoreFontsPopupContent">
+                    <path d="m280-400 200-200 200 200H280Z" />
+                  </svg>
+                </div>
+              </button>
+              {showFontButtons && (
+                <div className="FontButtons">
                   <button
-                    className="ClosePopup"
-                    onClick={() => toggleFontPickers(false, false)}
-                  >
-                    Close
+                    className="MoreFonts"
+                    style={{ fontFamily: "Arial" }}
+                    onClick={() => toggleFontPickers(false, true)}>
+                      More Fonts
                   </button>
-                  <span style={{ borderBottom: "1px solid #dddddd", display: "block", height: "1px" }} />
-                  {fonts.map((fonts: string) => (
+                  <span style={{ borderBottom: "1px solid #dddddd" }} />
+                  {topFonts.map((font: string) => (
                     <button
-                      key={fonts}
-                      style={{ fontFamily: fonts }}
-                      onClick={() => handleFontChange(fonts)}
+                      key={font}
+                      style={{ fontFamily: font }}
+                      onClick={() => handleFontChange(font)}
                     >
-                      {fonts === currentFont ? "✓ " : ""}
-                      {fonts}
+                      {font === currentFont ? "✓ " : ""}
+                      {font}
                     </button>
                   ))}
-                  </div>
-              </div>
-            )}
+                </div>
+              )}
+              {showMoreFonts && (
+                <div 
+                  className="MoreFontsPopup">
+                  <div className="MoreFontsPopupContent">
+                    <button
+                      className="ClosePopup"
+                      onClick={() => toggleFontPickers(false, false)}
+                    >
+                      Close
+                    </button>
+                    <span style={{ borderBottom: "1px solid #dddddd", display: "block", height: "1px" }} />
+                    {fonts.map((fonts: string) => (
+                      <button
+                        key={fonts}
+                        style={{ fontFamily: fonts }}
+                        onClick={() => handleFontChange(fonts)}
+                      >
+                        {fonts === currentFont ? "✓ " : ""}
+                        {fonts}
+                      </button>
+                    ))}
+                    </div>
+                </div>
+              )}
+            </div>
+            <div className="FontSize">
+              <button
+                onClick={
+                  () => {
+                    const currentFontSize = editor?.getAttributes('textStyle').fontSize || 16;
+                    editor.commands.setFontSize((currentFontSize + 2).toString());
+                  }}
+                className="Increase">
+                  A+
+              </button>
+              <button
+                onClick={
+                  () => {
+                    const currentFontSize = editor?.getAttributes('textStyle').fontSize || 16;
+                    editor.commands.setFontSize((currentFontSize - 2).toString());
+                  }
+                }
+                className="Decrease">
+                  A-
+              </button>
+            </div>
             <button
               onClick={() => editor.chain().focus().toggleBold().run()}
               disabled={!editor.can().chain().focus().toggleBold().run()}
