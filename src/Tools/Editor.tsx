@@ -1,7 +1,4 @@
-import {
-  EditorContent,
-  useEditor,
-} from "@tiptap/react";
+import { EditorContent, useEditor } from "@tiptap/react";
 import { useState, useEffect, useCallback, useRef } from "react";
 import axios from "axios";
 
@@ -37,7 +34,7 @@ const topFonts = [
   "Tahoma",
   "Courier",
   "Lucida Console",
-]
+];
 
 const TextStyleExtended = TextStyle.extend({
   addAttributes() {
@@ -45,17 +42,17 @@ const TextStyleExtended = TextStyle.extend({
       ...this.parent?.(),
       fontSize: {
         default: null,
-        parseHTML: (element) => element.style.fontSize.replace('px', ''),
+        parseHTML: (element) => element.style.fontSize.replace("px", ""),
         renderHTML: (attributes) => {
-            if (!attributes['fontSize']) {
-                return {};
-            }
-            return {
-                style: `font-size: ${attributes['fontSize']}px`
-            };
-        }
-      }
-    }
+          if (!attributes["fontSize"]) {
+            return {};
+          }
+          return {
+            style: `font-size: ${attributes["fontSize"]}px`,
+          };
+        },
+      },
+    };
   },
 
   addCommands() {
@@ -73,14 +70,14 @@ const TextStyleExtended = TextStyle.extend({
             .setMark(this.name, { fontSize: null })
             .removeEmptyTextStyle()
             .run();
-        }
+        },
     };
-  }
+  },
 });
 
 function Editor({ pageName }: { pageName: string }) {
   const menuRef = useRef<HTMLDivElement>(null);
-  
+
   const [height] = useState("480");
   const [width] = useState("640");
   const [fonts, setFonts] = useState<string[]>([]);
@@ -92,13 +89,13 @@ function Editor({ pageName }: { pageName: string }) {
     const fetchFonts = async () => {
       try {
         const res = await axios.get(
-          `https://www.googleapis.com/webfonts/v1/webfonts?key=${import.meta.env.VITE_GOOGLE_FONT_API}`
+          `https://www.googleapis.com/webfonts/v1/webfonts?key=${import.meta.env.VITE_GOOGLE_FONT_API}`,
         );
         const fontList = res.data.items.map((font: any) => font.family);
         setFonts(fontList);
       } catch (err) {
         console.error("Error fetching Google Fonts:", err);
-      };
+      }
     };
     fetchFonts();
   }, []);
@@ -130,13 +127,10 @@ function Editor({ pageName }: { pageName: string }) {
       localStorage.setItem(pageName, html);
 
       try {
-        await axios.post(
-          `${API_BASE_URL}/api/auth/save-content`,
-          {
-            pageName,
-            content: html,
-          },
-        );
+        await axios.post(`${API_BASE_URL}/api/auth/save-content`, {
+          pageName,
+          content: html,
+        });
       } catch (err) {
         console.error("Error saving content:", err);
       }
@@ -146,12 +140,9 @@ function Editor({ pageName }: { pageName: string }) {
   useEffect(() => {
     const fetchContent = async () => {
       try {
-        const res = await axios.get(
-          `${API_BASE_URL}/api/auth/get-content`,
-          {
-            params: { pageName },
-          },
-        );
+        const res = await axios.get(`${API_BASE_URL}/api/auth/get-content`, {
+          params: { pageName },
+        });
         if (res.data.content) {
           editor?.commands.setContent(res.data.content);
         }
@@ -185,7 +176,7 @@ function Editor({ pageName }: { pageName: string }) {
   const toggleFontPickers = (normal: boolean, more: boolean) => {
     setShowFontButtons(normal);
     setShowMoreFonts(more);
-  }
+  };
 
   const setLink = useCallback(() => {
     const previousURL =
@@ -248,7 +239,9 @@ function Editor({ pageName }: { pageName: string }) {
               >
                 {currentFont}
                 <div
-                  className={"FontArrow" + (showFontButtons ? " is-active" : "")}
+                  className={
+                    "FontArrow" + (showFontButtons ? " is-active" : "")
+                  }
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -266,8 +259,9 @@ function Editor({ pageName }: { pageName: string }) {
                   <button
                     className="MoreFonts"
                     style={{ fontFamily: "Arial" }}
-                    onClick={() => toggleFontPickers(false, true)}>
-                      More Fonts
+                    onClick={() => toggleFontPickers(false, true)}
+                  >
+                    More Fonts
                   </button>
                   <span style={{ borderBottom: "1px solid #dddddd" }} />
                   {topFonts.map((font: string) => (
@@ -283,8 +277,7 @@ function Editor({ pageName }: { pageName: string }) {
                 </div>
               )}
               {showMoreFonts && (
-                <div 
-                  className="MoreFontsPopup">
+                <div className="MoreFontsPopup">
                   <div className="MoreFontsPopupContent">
                     <button
                       className="ClosePopup"
@@ -292,7 +285,13 @@ function Editor({ pageName }: { pageName: string }) {
                     >
                       Close
                     </button>
-                    <span style={{ borderBottom: "1px solid #dddddd", display: "block", height: "1px" }} />
+                    <span
+                      style={{
+                        borderBottom: "1px solid #dddddd",
+                        display: "block",
+                        height: "1px",
+                      }}
+                    />
                     {fonts.map((fonts: string) => (
                       <button
                         key={fonts}
@@ -303,29 +302,30 @@ function Editor({ pageName }: { pageName: string }) {
                         {fonts}
                       </button>
                     ))}
-                    </div>
+                  </div>
                 </div>
               )}
             </div>
             <div className="FontSize">
               <button
-                onClick={
-                  () => {
-                    const currentFontSize = editor?.getAttributes('textStyle').fontSize || 16;
-                    editor.commands.setFontSize((currentFontSize + 2).toString());
-                  }}
-                className="Increase">
-                  A+
+                onClick={() => {
+                  const currentFontSize =
+                    editor?.getAttributes("textStyle").fontSize || 16;
+                  editor.commands.setFontSize((currentFontSize + 2).toString());
+                }}
+                className="Increase"
+              >
+                A+
               </button>
               <button
-                onClick={
-                  () => {
-                    const currentFontSize = editor?.getAttributes('textStyle').fontSize || 16;
-                    editor.commands.setFontSize((currentFontSize - 2).toString());
-                  }
-                }
-                className="Decrease">
-                  A-
+                onClick={() => {
+                  const currentFontSize =
+                    editor?.getAttributes("textStyle").fontSize || 16;
+                  editor.commands.setFontSize((currentFontSize - 2).toString());
+                }}
+                className="Decrease"
+              >
+                A-
               </button>
             </div>
             <button
