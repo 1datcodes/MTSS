@@ -1,6 +1,6 @@
 import { useAuth } from "../Login System/AuthContext";
 import "./Navbar.css";
-import logo from "../MTSS.png";
+import logo from "../Assets/MTSS.png";
 
 const Navbar = () => {
   const { username, setUsername, setAccess } = useAuth();

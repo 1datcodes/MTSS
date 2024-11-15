@@ -27,7 +27,7 @@
   transition: all 0.3s ease-in-out;
 }
 
-.Menubar button:hover:not(:disabled) {
+.Menubar button:hover:not(:disabled):not(.is-active) {
   background-color: #eeeeee;
 }
 
@@ -38,6 +38,10 @@
 
 .Menubar button.is-active {
   background-color: #dddddd;
+}
+
+.Menubar button.is-active:hover {
+  background-color: #dddddd; /* Ensure the active color stays on hover */
 }
 
 .ProseMirror:focus-visible {
