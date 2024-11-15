@@ -108,6 +108,10 @@
   }
 }
 
+.FontDropper {
+  border: 1px solid #ddd !important;
+}
+
 .FontArrow {
   transition: all 0.1s ease-in-out;
 }
@@ -128,16 +132,14 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   margin-top: 0.5rem;
   z-index: 1;
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .FontButtons button {
   justify-content: flex-start;
   padding: 0.5rem 0.75rem;
   width: 100%;
-  border: none;
-  background-color: white;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
 }
 
 .FontButtons button:hover {
@@ -155,8 +157,8 @@ svg {
   width: 50rem;
   height: 40rem;
   overflow-y: scroll;
-  background-color: white;
   border: 1px solid #ddd;
+  background-color: white;
   border-radius: 0.3rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   margin-top: 0.5rem;

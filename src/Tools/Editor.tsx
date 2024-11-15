@@ -92,9 +92,7 @@ function Editor({ pageName }: { pageName: string }) {
       localStorage.setItem(pageName, html);
 
       try {
-        // const devPortID = import.meta.env.VITE_DEV_PORT;
         await axios.post(
-          // `http://localhost:${devPortID}/api/auth/save-content`,
           `${API_BASE_URL}/api/auth/save-content`,
           {
             pageName,
@@ -110,9 +108,7 @@ function Editor({ pageName }: { pageName: string }) {
   useEffect(() => {
     const fetchContent = async () => {
       try {
-        // const devPortID = import.meta.env.VITE_DEV_PORT;
         const res = await axios.get(
-          // `http://localhost:${devPortID}/api/auth/get-content`,
           `${API_BASE_URL}/api/auth/get-content`,
           {
             params: { pageName },
@@ -132,8 +128,7 @@ function Editor({ pageName }: { pageName: string }) {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setShowFontButtons(false);
-        setShowMoreFonts(false);
+        toggleFontPickers(false, false);
       }
     };
 
@@ -145,10 +140,14 @@ function Editor({ pageName }: { pageName: string }) {
 
   const handleFontChange = (font: string) => {
     setCurrentFont(font);
-    setShowFontButtons(false);
-    setShowMoreFonts(false);
+    toggleFontPickers(false, false);
     editor?.chain().focus().setFontFamily(font).run();
   };
+
+  const toggleFontPickers = (normal: boolean, more: boolean) => {
+    setShowFontButtons(normal);
+    setShowMoreFonts(more);
+  }
 
   const setLink = useCallback(() => {
     const previousURL =
@@ -205,7 +204,7 @@ function Editor({ pageName }: { pageName: string }) {
           <div className="Menubar" ref={menuRef}>
             <button
               style={{ fontFamily: currentFont }}
-              onClick={() => setShowFontButtons(!showFontButtons)}
+              onClick={() => toggleFontPickers(!showFontButtons, false)}
               className="FontDropper"
             >
               {currentFont}
@@ -228,7 +227,7 @@ function Editor({ pageName }: { pageName: string }) {
                 <button
                   className="MoreFonts"
                   style={{ fontFamily: "Arial" }}
-                  onClick={() => setShowMoreFonts(true)}>
+                  onClick={() => toggleFontPickers(false, true)}>
                     More Fonts
                 </button>
                 <span style={{ borderBottom: "1px solid #dddddd" }} />
@@ -250,7 +249,7 @@ function Editor({ pageName }: { pageName: string }) {
                 <div className="MoreFontsPopupContent">
                   <button
                     className="ClosePopup"
-                    onClick={() => setShowMoreFonts(false)}
+                    onClick={() => toggleFontPickers(false, false)}
                   >
                     Close
                   </button>
