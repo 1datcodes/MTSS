@@ -10,6 +10,7 @@ import ImageResize from "tiptap-extension-resize-image";
 import Youtube from "@tiptap/extension-youtube";
 import Typography from "@tiptap/extension-typography";
 import TextStyle from "@tiptap/extension-text-style";
+import { FontSize } from "./TextStyleExtended";
 import FontFamily from "@tiptap/extension-font-family";
 
 import "./Editor.css";
@@ -36,45 +37,6 @@ const topFonts = [
   "Lucida Console",
 ];
 
-const TextStyleExtended = TextStyle.extend({
-  addAttributes() {
-    return {
-      ...this.parent?.(),
-      fontSize: {
-        default: null,
-        parseHTML: (element) => element.style.fontSize.replace("px", ""),
-        renderHTML: (attributes) => {
-          if (!attributes["fontSize"]) {
-            return {};
-          }
-          return {
-            style: `font-size: ${attributes["fontSize"]}px`,
-          };
-        },
-      },
-    };
-  },
-
-  addCommands() {
-    return {
-      ...this.parent?.(),
-      setFontSize:
-        (fontSize) =>
-        ({ commands }) => {
-          return commands.setMark(this.name, { fontSize: fontSize });
-        },
-      unsetFontSize:
-        () =>
-        ({ chain }) => {
-          return chain()
-            .setMark(this.name, { fontSize: null })
-            .removeEmptyTextStyle()
-            .run();
-        },
-    };
-  },
-});
-
 function Editor({ pageName }: { pageName: string }) {
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -91,6 +53,7 @@ function Editor({ pageName }: { pageName: string }) {
         const res = await axios.get(
           `https://www.googleapis.com/webfonts/v1/webfonts?key=${import.meta.env.VITE_GOOGLE_FONT_API}`,
         );
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const fontList = res.data.items.map((font: any) => font.family);
         setFonts(fontList);
       } catch (err) {
@@ -117,7 +80,7 @@ function Editor({ pageName }: { pageName: string }) {
       }),
       Typography,
       TextStyle,
-      TextStyleExtended,
+      FontSize,
       FontFamily.configure({
         types: ["textStyle"],
       }),
@@ -311,17 +274,18 @@ function Editor({ pageName }: { pageName: string }) {
                 onClick={() => {
                   const currentFontSize =
                     editor?.getAttributes("textStyle").fontSize || 16;
-                  editor.commands.setFontSize((currentFontSize + 2).toString());
+                  editor.commands.setFontSize((parseInt(currentFontSize) + 1).toString());
                 }}
                 className="Increase"
               >
                 A+
               </button>
+              <p className="FontSizeLabel">{editor.getAttributes("textStyle").fontSize || 16}</p>
               <button
                 onClick={() => {
                   const currentFontSize =
                     editor?.getAttributes("textStyle").fontSize || 16;
-                  editor.commands.setFontSize((currentFontSize - 2).toString());
+                  editor.commands.setFontSize((parseInt(currentFontSize) - 1).toString());
                 }}
                 className="Decrease"
               >

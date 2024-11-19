@@ -114,3 +114,11 @@ svg {
   width: 100%;
   justify-content: flex-start;
 }
+
+.FontSize {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  color: #6e0b0b;
+}
