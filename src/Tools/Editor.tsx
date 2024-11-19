@@ -10,8 +10,10 @@ import ImageResize from "tiptap-extension-resize-image";
 import Youtube from "@tiptap/extension-youtube";
 import Typography from "@tiptap/extension-typography";
 import TextStyle from "@tiptap/extension-text-style";
-import { FontSize } from "./TextStyleExtended";
+import TextStyleExtended from "./TextStyleExtended";
 import FontFamily from "@tiptap/extension-font-family";
+
+import FontSizeDropdown from "./FontSizeDropdown";
 
 import "./Editor.css";
 
@@ -80,7 +82,7 @@ function Editor({ pageName }: { pageName: string }) {
       }),
       Typography,
       TextStyle,
-      FontSize,
+      TextStyleExtended,
       FontFamily.configure({
         types: ["textStyle"],
       }),
@@ -280,7 +282,7 @@ function Editor({ pageName }: { pageName: string }) {
               >
                 A+
               </button>
-              <p className="FontSizeLabel">{editor.getAttributes("textStyle").fontSize || 16}</p>
+              <FontSizeDropdown editor={editor} />
               <button
                 onClick={() => {
                   const currentFontSize =

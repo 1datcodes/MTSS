@@ -120,5 +120,40 @@ svg {
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
+  gap: 2px;
   color: #6e0b0b;
+}
+
+.FontSizeDropdown {
+  display: inline-flex;
+  width: 100%;
+}
+
+.FontSizeDropdown input {
+  max-width: 2em;
+  height: 1.5em;
+  text-align: center;
+  border: 1px solid #bcbcbc;
+  border-radius: 0.2rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.FontSizeDropdown input:hover {
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+.FontSizePicker {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 65%;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 0.3rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin-top: 0.5rem;
+  z-index: 1;
+  max-height: 400px;
+  overflow-y: auto;
 }
