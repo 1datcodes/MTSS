@@ -276,7 +276,9 @@ function Editor({ pageName }: { pageName: string }) {
                 onClick={() => {
                   const currentFontSize =
                     editor?.getAttributes("textStyle").fontSize || 16;
-                  editor.commands.setFontSize((parseInt(currentFontSize) + 1).toString());
+                  editor.commands.setFontSize(
+                    (parseInt(currentFontSize) + 1).toString(),
+                  );
                 }}
                 className="Increase"
               >
@@ -287,7 +289,9 @@ function Editor({ pageName }: { pageName: string }) {
                 onClick={() => {
                   const currentFontSize =
                     editor?.getAttributes("textStyle").fontSize || 16;
-                  editor.commands.setFontSize((parseInt(currentFontSize) - 1).toString());
+                  editor.commands.setFontSize(
+                    (parseInt(currentFontSize) - 1).toString(),
+                  );
                 }}
                 className="Decrease"
               >
