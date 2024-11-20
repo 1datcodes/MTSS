@@ -136,6 +136,7 @@ svg {
   border: 1px solid #bcbcbc;
   border-radius: 0.2rem;
   transition: all 0.3s ease-in-out;
+  color: #6e0b0b;
 }
 
 .FontSizeDropdown input:hover {

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import "./Editor.css";
+import "../Editor.css";
 
 const commonFontSize = [
   12, 14, 15, 16, 18, 20, 24, 30, 36, 48, 60, 72, 96, 108,

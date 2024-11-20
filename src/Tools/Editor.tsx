@@ -10,10 +10,11 @@ import ImageResize from "tiptap-extension-resize-image";
 import Youtube from "@tiptap/extension-youtube";
 import Typography from "@tiptap/extension-typography";
 import TextStyle from "@tiptap/extension-text-style";
-import TextStyleExtended from "./TextStyleExtended";
+import TextStyleExtended from "./EditorComponents/TextStyleExtended";
 import FontFamily from "@tiptap/extension-font-family";
 
-import FontSizeDropdown from "./FontSizeDropdown";
+import { AddImage, AddYoutube } from "./EditorComponents/AddMedia";
+import FontSizeDropdown from "./EditorComponents/FontSizeDropdown";
 
 import "./Editor.css";
 
@@ -42,8 +43,6 @@ const topFonts = [
 function Editor({ pageName }: { pageName: string }) {
   const menuRef = useRef<HTMLDivElement>(null);
 
-  const [height] = useState("480");
-  const [width] = useState("640");
   const [fonts, setFonts] = useState<string[]>([]);
   const [showFontButtons, setShowFontButtons] = useState(false);
   const [currentFont, setCurrentFont] = useState("Arial");
@@ -165,31 +164,6 @@ function Editor({ pageName }: { pageName: string }) {
       .setLink({ href: url })
       .run();
   }, [editor]);
-
-  const addImage = useCallback(() => {
-    const url = window.prompt(
-      "Paste the Image URL",
-      "https://example.com/image.jpg",
-    );
-
-    if (url) {
-      editor?.chain().focus().setImage({ src: url }).run();
-    }
-  }, [editor]);
-
-  const addYoutube = () => {
-    const url = prompt("Paste the Youtube URL", "https://youtu.be/dQw4w9WgXcQ"); // Hidden Rick Roll
-
-    // Add function to get width and height from user input
-
-    if (url) {
-      editor?.commands.setYoutubeVideo({
-        src: url,
-        width: Math.max(320, parseInt(width, 10)) || 640,
-        height: Math.max(180, parseInt(height, 10)) || 480,
-      });
-    }
-  };
 
   return (
     <div className="Content">
@@ -416,28 +390,8 @@ function Editor({ pageName }: { pageName: string }) {
                 />
               </svg>
             </button>
-            <button onClick={() => addImage()}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="24px"
-                viewBox="0 -960 960 960"
-                width="24px"
-                fill="#e8eaed"
-              >
-                <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm40-80h480L570-480 450-320l-90-120-120 160Zm-40 80v-560 560Z" />
-              </svg>
-            </button>
-            <button onClick={addYoutube} className="YoutubeButton">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="24px"
-                viewBox="0 -960 960 960"
-                width="24px"
-                fill="#e8eaed"
-              >
-                <path d="m160-800 80 160h120l-80-160h80l80 160h120l-80-160h80l80 160h120l-80-160h120q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800Zm0 240v320h640v-320H160Zm0 0v320-320Z" />
-              </svg>
-            </button>
+            <AddImage editor={editor} />
+            <AddYoutube editor={editor} />
             <button
               onClick={() => editor.chain().focus().undo().run()}
               disabled={!editor.can().chain().focus().undo().run()}
