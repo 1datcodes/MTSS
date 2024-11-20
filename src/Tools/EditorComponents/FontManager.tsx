@@ -175,11 +175,16 @@ export const FontSize = ({ editor }: any) => {
       <FontSizeDropdown editor={editor} />
       <button
         onClick={() => {
-          const currentFontSize =
+          let currentFontSize =
             editor?.getAttributes("textStyle").fontSize || 16;
-          editor.commands.setFontSize(
-            (parseInt(currentFontSize) - 1).toString(),
-          );
+            if (parseInt(currentFontSize) > 1) {
+              editor.commands.setFontSize(
+                (parseInt(currentFontSize) - 1).toString(),
+              );
+            } else {
+              currentFontSize = "1";
+              editor.commands.setFontSize("1");
+            }
         }}
         className="Decrease"
       >

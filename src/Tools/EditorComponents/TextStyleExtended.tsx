@@ -34,7 +34,12 @@ const TextStyleExtended = TextStyle.extend({
       setFontSize:
         (fontSize) =>
         ({ commands }) => {
-          return commands.setMark(this.name, { fontSize: fontSize });
+          if (parseInt(fontSize) > 1) {
+            console.log(fontSize);
+            return commands.setMark(this.name, { fontSize: fontSize });
+          } else {
+            return commands.setMark(this.name, { fontSize: 1 });
+          }
         },
       unsetFontSize:
         () =>
