@@ -14,55 +14,15 @@ import TextStyleExtended from "./EditorComponents/TextStyleExtended";
 import FontFamily from "@tiptap/extension-font-family";
 
 import { AddImage, AddYoutube } from "./EditorComponents/AddMedia";
+import { FontManager, FontSize } from "./EditorComponents/FontManager";
 import FontSizeDropdown from "./EditorComponents/FontSizeDropdown";
 
 import "./Editor.css";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
-const topFonts = [
-  "Arial",
-  "Helvetica",
-  "Times New Roman",
-  "Courier New",
-  "Verdana",
-  "Georgia",
-  "Palatino",
-  "Garamond",
-  "Bookman",
-  "Comic Sans MS",
-  "Trebuchet MS",
-  "Arial Black",
-  "Impact",
-  "Lucida Sans Unicode",
-  "Tahoma",
-  "Courier",
-  "Lucida Console",
-];
-
 function Editor({ pageName }: { pageName: string }) {
   const menuRef = useRef<HTMLDivElement>(null);
-
-  const [fonts, setFonts] = useState<string[]>([]);
-  const [showFontButtons, setShowFontButtons] = useState(false);
-  const [currentFont, setCurrentFont] = useState("Arial");
-  const [showMoreFonts, setShowMoreFonts] = useState(false);
-
-  useEffect(() => {
-    const fetchFonts = async () => {
-      try {
-        const res = await axios.get(
-          `https://www.googleapis.com/webfonts/v1/webfonts?key=${import.meta.env.VITE_GOOGLE_FONT_API}`,
-        );
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const fontList = res.data.items.map((font: any) => font.family);
-        setFonts(fontList);
-      } catch (err) {
-        console.error("Error fetching Google Fonts:", err);
-      }
-    };
-    fetchFonts();
-  }, []);
 
   const editor = useEditor({
     content: localStorage.getItem(pageName),
@@ -118,30 +78,6 @@ function Editor({ pageName }: { pageName: string }) {
     fetchContent();
   }, [pageName, editor]);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        toggleFontPickers(false, false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [menuRef]);
-
-  const handleFontChange = (font: string) => {
-    setCurrentFont(font);
-    toggleFontPickers(false, false);
-    editor?.chain().focus().setFontFamily(font).run();
-  };
-
-  const toggleFontPickers = (normal: boolean, more: boolean) => {
-    setShowFontButtons(normal);
-    setShowMoreFonts(more);
-  };
-
   const setLink = useCallback(() => {
     const previousURL =
       editor?.getAttributes("link").href || "https://example.com";
@@ -170,82 +106,8 @@ function Editor({ pageName }: { pageName: string }) {
       {editor && (
         <div className="Tools">
           <div className="Menubar" ref={menuRef}>
-            <div className="FontManager">
-              <button
-                style={{ fontFamily: currentFont }}
-                onClick={() => toggleFontPickers(!showFontButtons, false)}
-                className="FontDropper"
-              >
-                {currentFont}
-                <div
-                  className={
-                    "FontArrow" + (showFontButtons ? " is-active" : "")
-                  }
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="24px"
-                    viewBox="0 -960 960 960"
-                    width="24px"
-                    fill="#e8eaed"
-                  >
-                    <path d="m280-400 200-200 200 200H280Z" />
-                  </svg>
-                </div>
-              </button>
-              {showFontButtons && (
-                <div className="FontButtons">
-                  <button
-                    className="MoreFonts"
-                    style={{ fontFamily: "Arial" }}
-                    onClick={() => toggleFontPickers(false, true)}
-                  >
-                    More Fonts
-                  </button>
-                  <span style={{ borderBottom: "1px solid #dddddd" }} />
-                  {topFonts.map((font: string) => (
-                    <button
-                      key={font}
-                      style={{ fontFamily: font }}
-                      onClick={() => handleFontChange(font)}
-                    >
-                      {font === currentFont ? "✓ " : ""}
-                      {font}
-                    </button>
-                  ))}
-                </div>
-              )}
-              {showMoreFonts && (
-                <div className="MoreFontsPopup">
-                  <div className="MoreFontsPopupContent">
-                    <button
-                      className="ClosePopup"
-                      onClick={() => toggleFontPickers(false, false)}
-                    >
-                      Close
-                    </button>
-                    <span
-                      style={{
-                        borderBottom: "1px solid #dddddd",
-                        display: "block",
-                        height: "1px",
-                      }}
-                    />
-                    {fonts.map((fonts: string) => (
-                      <button
-                        key={fonts}
-                        style={{ fontFamily: fonts }}
-                        onClick={() => handleFontChange(fonts)}
-                      >
-                        {fonts === currentFont ? "✓ " : ""}
-                        {fonts}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-            <div className="FontSize">
+            <FontManager editor={editor} />
+            {/* <div className="FontSize">
               <button
                 onClick={() => {
                   const currentFontSize =
@@ -271,7 +133,8 @@ function Editor({ pageName }: { pageName: string }) {
               >
                 A-
               </button>
-            </div>
+            </div> */}
+            <FontSize editor={editor} />
             <button
               onClick={() => editor.chain().focus().toggleBold().run()}
               disabled={!editor.can().chain().focus().toggleBold().run()}
