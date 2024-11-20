@@ -1,5 +1,5 @@
 import { EditorContent, useEditor } from "@tiptap/react";
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 
 // Extensions
@@ -13,17 +13,14 @@ import TextStyle from "@tiptap/extension-text-style";
 import TextStyleExtended from "./EditorComponents/TextStyleExtended";
 import FontFamily from "@tiptap/extension-font-family";
 
-import { AddImage, AddYoutube } from "./EditorComponents/AddMedia";
+import { AddImage, AddYoutube, AddLink } from "./EditorComponents/AddMedia";
 import { FontManager, FontSize } from "./EditorComponents/FontManager";
-import FontSizeDropdown from "./EditorComponents/FontSizeDropdown";
 
 import "./Editor.css";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 function Editor({ pageName }: { pageName: string }) {
-  const menuRef = useRef<HTMLDivElement>(null);
-
   const editor = useEditor({
     content: localStorage.getItem(pageName),
     extensions: [
@@ -49,7 +46,6 @@ function Editor({ pageName }: { pageName: string }) {
     onUpdate: async ({ editor }) => {
       const html = editor.getHTML();
       localStorage.setItem(pageName, html);
-
       try {
         await axios.post(`${API_BASE_URL}/api/auth/save-content`, {
           pageName,
@@ -78,62 +74,12 @@ function Editor({ pageName }: { pageName: string }) {
     fetchContent();
   }, [pageName, editor]);
 
-  const setLink = useCallback(() => {
-    const previousURL =
-      editor?.getAttributes("link").href || "https://example.com";
-    const url = window.prompt("Paste the full URL", previousURL);
-
-    if (url === null) {
-      return;
-    }
-
-    if (url === "") {
-      editor?.chain().focus().extendMarkRange("link").unsetLink().run();
-
-      return;
-    }
-
-    editor
-      ?.chain()
-      .focus()
-      .extendMarkRange("link")
-      .setLink({ href: url })
-      .run();
-  }, [editor]);
-
   return (
     <div className="Content">
       {editor && (
         <div className="Tools">
-          <div className="Menubar" ref={menuRef}>
+          <div className="Menubar">
             <FontManager editor={editor} />
-            {/* <div className="FontSize">
-              <button
-                onClick={() => {
-                  const currentFontSize =
-                    editor?.getAttributes("textStyle").fontSize || 16;
-                  editor.commands.setFontSize(
-                    (parseInt(currentFontSize) + 1).toString(),
-                  );
-                }}
-                className="Increase"
-              >
-                A+
-              </button>
-              <FontSizeDropdown editor={editor} />
-              <button
-                onClick={() => {
-                  const currentFontSize =
-                    editor?.getAttributes("textStyle").fontSize || 16;
-                  editor.commands.setFontSize(
-                    (parseInt(currentFontSize) - 1).toString(),
-                  );
-                }}
-                className="Decrease"
-              >
-                A-
-              </button>
-            </div> */}
             <FontSize editor={editor} />
             <button
               onClick={() => editor.chain().focus().toggleBold().run()}
@@ -180,31 +126,7 @@ function Editor({ pageName }: { pageName: string }) {
                 <path d="M486-160q-76 0-135-45t-85-123l88-38q14 48 48.5 79t85.5 31q42 0 76-20t34-64q0-18-7-33t-19-27h112q5 14 7.5 28.5T694-340q0 86-61.5 133T486-160ZM80-480v-80h800v80H80Zm402-326q66 0 115.5 32.5T674-674l-88 39q-9-29-33.5-52T484-710q-41 0-68 18.5T386-640h-96q2-69 54.5-117.5T482-806Z" />
               </svg>
             </button>
-            <button
-              onClick={() => {
-                if (editor.isActive("link")) {
-                  editor
-                    .chain()
-                    .focus()
-                    .extendMarkRange("link")
-                    .unsetLink()
-                    .run();
-                } else {
-                  setLink();
-                }
-              }}
-              className={editor.isActive("link") ? "is-active" : ""}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="24px"
-                viewBox="0 -960 960 960"
-                width="24px"
-                fill="#6e0b0b"
-              >
-                <path d="M440-280H280q-83 0-141.5-58.5T80-480q0-83 58.5-141.5T280-680h160v80H280q-50 0-85 35t-35 85q0 50 35 85t85 35h160v80ZM320-440v-80h320v80H320Zm200 160v-80h160q50 0 85-35t35-85q0-50-35-85t-85-35H520v-80h160q83 0 141.5 58.5T880-480q0 83-58.5 141.5T680-280H520Z" />
-              </svg>
-            </button>
+            <AddLink editor={editor} />
             <button
               onClick={() => editor.chain().focus().toggleBulletList().run()}
               className={editor.isActive("bulletList") ? "is-active" : ""}
