@@ -68,7 +68,7 @@ Important: Make sure to ask for the `.env` file to Kaicheng or Michi since it st
     - Website isn't properly hosted _**(Resolved in V1.1.0)**_
     - Mr. Paley will find us a mentor to do that
   - **Todo**:
-    - Figure out a way to change text size or integrate headings
+    - Figure out a way to change text size or integrate headings _**(Implemented in V1.1.3)**_
     - Make the prompt for video and image upload look better
 
 - ## Version 1.1.0
@@ -78,3 +78,19 @@ Important: Make sure to ask for the `.env` file to Kaicheng or Michi since it st
 - ## Version 1.1.1
 
   - Added Jesse's MTSS Logo
+
+- ## Version 1.1.2
+
+  - Removed Floating menu and Bubble menu, deemed unnecessary
+  - Added Favicon
+  - **Todo**:
+    - Add font size _**(Implemented in V1.1.3)**_
+
+- ## Version 1.1.3
+
+  - Added font size
+
+- ## Version 1.2.0
+
+  - Cleaned up file management by breaking up components into their own files
+  - Other house keeping stuff

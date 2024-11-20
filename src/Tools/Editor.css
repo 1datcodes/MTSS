@@ -27,7 +27,7 @@
   transition: all 0.3s ease-in-out;
 }
 
-.Menubar button:hover:not(:disabled) {
+.Menubar button:hover:not(:disabled):not(.is-active) {
   background-color: #eeeeee;
 }
 
@@ -40,72 +40,16 @@
   background-color: #dddddd;
 }
 
+.Menubar button.is-active:hover {
+  background-color: #dddddd; /* Ensure the active color stays on hover */
+}
+
 .ProseMirror:focus-visible {
   outline-offset: 0.4rem;
 }
 
-.BubbleMenu {
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 0.6rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  gap: 0.2rem;
-  padding: 0.3rem;
-
-  button {
-    background-color: white;
-    border: none;
-    border-radius: 0.3rem;
-    padding: 0.275rem 0.425rem;
-    transition: all 0.1s ease-in-out;
-
-    &:hover {
-      background-color: #d6d5d5c7;
-    }
-
-    &.is-active {
-      background-color: #de7d7d;
-
-      &:hover {
-        background-color: #e89090;
-      }
-    }
-  }
-}
-
-.FloatingMenu {
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 0.6rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  gap: 0.2rem;
-  padding: 0.3rem;
-
-  button {
-    background-color: white;
-    border: none;
-    border-radius: 0.3rem;
-    padding: 0.275rem 0.425rem;
-    transition: all 0.1s ease-in-out;
-
-    &:hover {
-      background-color: #d6d5d5c7;
-    }
-
-    &.is-active {
-      background-color: #de7d7d;
-
-      &:hover {
-        background-color: #e89090;
-      }
-    }
-  }
+.FontDropper {
+  border: 1px solid #ddd !important;
 }
 
 .FontArrow {
@@ -128,16 +72,15 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   margin-top: 0.5rem;
   z-index: 1;
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .FontButtons button {
   justify-content: flex-start;
-  padding: 0.5rem 0.75rem;
+  text-align: start;
+  padding: 0.5em 0.75em;
   width: 100%;
-  border: none;
-  background-color: white;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
 }
 
 .FontButtons button:hover {
@@ -146,4 +89,68 @@
 
 svg {
   fill: #6e0b0b;
+}
+
+.MoreFontsPopup {
+  position: absolute;
+  top: calc(50% + 10rem);
+  left: calc(50% - 25rem);
+  width: 50rem;
+  height: 40rem;
+  overflow-y: scroll;
+  border: 1px solid #ddd;
+  background-color: white;
+  border-radius: 0.3rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin-top: 0.5rem;
+  z-index: 1;
+}
+
+.MoreFontsPopupContent {
+  width: 95%;
+  padding-left: 2rem;
+}
+
+.MoreFontsPopupContent button {
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.FontSize {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 0.5rem;
+  color: #6e0b0b;
+}
+
+.FontSizeDropdown {
+  display: inline-flex;
+  width: 100%;
+}
+
+.FontSizeDropdown input {
+  max-width: 2em;
+  height: 1.5em;
+  text-align: center;
+  border: 1px solid #bcbcbc;
+  border-radius: 0.2rem;
+  transition: all 0.3s ease-in-out;
+  color: #6e0b0b;
+}
+
+.FontSizePicker {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 65%;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 0.3rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin-top: 0.5rem;
+  z-index: 1;
+  max-height: 400px;
+  overflow-y: auto;
 }
