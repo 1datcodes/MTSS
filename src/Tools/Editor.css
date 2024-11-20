@@ -78,7 +78,8 @@
 
 .FontButtons button {
   justify-content: flex-start;
-  padding: 0.5rem 0.75rem;
+  text-align: start;
+  padding: 0.5em 0.75em;
   width: 100%;
 }
 
@@ -137,11 +138,6 @@ svg {
   border-radius: 0.2rem;
   transition: all 0.3s ease-in-out;
   color: #6e0b0b;
-}
-
-.FontSizeDropdown input:hover {
-  background-color: #ddd;
-  cursor: pointer;
 }
 
 .FontSizePicker {

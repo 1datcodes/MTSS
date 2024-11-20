@@ -14,22 +14,41 @@ import Supports from "./Supports/SupportPages";
 
 import "./App.css";
 
+const pages = [
+  {
+    path: "/",
+    element: <HomePage />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
+  },
+  {
+    path: "/resources",
+    element: <Resources />,
+  },
+  {
+    path: "/supports",
+    element: <Supports />,
+  },
+  {
+    path: "/profile",
+    element: localStorage.getItem("username") ? <Profile /> : <Navigate to="/" />,
+  }
+]
+
 function App() {
   return (
     <Router>
       <AuthStatus />
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/resources" element={<Resources />} />
-        <Route path="/supports" element={<Supports />} />
-        <Route
-          path="/profile"
-          element={
-            localStorage.getItem("username") ? <Profile /> : <Navigate to="/" />
-          }
-        />
+        {pages.map((page) => (
+          <Route key={page.path} path={page.path} element={page.element} />
+        ))}
       </Routes>
     </Router>
   );
