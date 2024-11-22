@@ -1,5 +1,6 @@
 import { AddImage, AddYoutube, AddLink } from "./AddMedia";
 import { FontManager, FontSize } from "./FontManager";
+import { TextAlign } from "./TextAlign";
 
 export const Menubar = ({ editor }: any) => {
   return (
@@ -69,6 +70,7 @@ export const Menubar = ({ editor }: any) => {
         </svg>
       </button>
       <span className="Separator" />
+      <TextAlign editor={editor} />
       <AddLink editor={editor} />
       <button
         onClick={() => editor.chain().focus().toggleBulletList().run()}

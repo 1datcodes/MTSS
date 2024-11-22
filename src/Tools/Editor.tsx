@@ -12,6 +12,7 @@ import Youtube from "@tiptap/extension-youtube";
 import Typography from "@tiptap/extension-typography";
 import TextStyle from "@tiptap/extension-text-style";
 import TextStyleExtended from "./EditorComponents/TextStyleExtended";
+import TextAlign from "@tiptap/extension-text-align";
 import FontFamily from "@tiptap/extension-font-family";
 import FileHandler from "@tiptap-pro/extension-file-handler";
 
@@ -41,6 +42,7 @@ function Editor({ pageName }: { pageName: string }) {
       Typography,
       TextStyle,
       TextStyleExtended,
+      TextAlign,
       FontFamily.configure({
         types: ["textStyle"],
       }),
