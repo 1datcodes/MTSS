@@ -37,9 +37,13 @@ const pages = [
   },
   {
     path: "/profile",
-    element: localStorage.getItem("username") ? <Profile /> : <Navigate to="/" />,
-  }
-]
+    element: localStorage.getItem("username") ? (
+      <Profile />
+    ) : (
+      <Navigate to="/" />
+    ),
+  },
+];
 
 function App() {
   return (

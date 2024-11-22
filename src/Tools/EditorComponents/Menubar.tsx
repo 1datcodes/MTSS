@@ -5,7 +5,9 @@ export const Menubar = ({ editor }: any) => {
   return (
     <div className="Menubar">
       <FontManager editor={editor} />
+      <span className="Separator" />
       <FontSize editor={editor} />
+      <span className="Separator" />
       <button
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={!editor.can().chain().focus().toggleBold().run()}
@@ -37,6 +39,21 @@ export const Menubar = ({ editor }: any) => {
         </svg>
       </button>
       <button
+        onClick={() => editor.chain().focus().toggleUnderline().run()}
+        disabled={!editor.can().chain().focus().toggleUnderline().run()}
+        className={editor.isActive("underline") ? "is-active" : ""}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="24px"
+          viewBox="0 -960 960 960"
+          width="24px"
+          fill="#6e0b0b"
+        >
+          <path d="M200-120v-80h560v80H200Zm280-160q-101 0-157-63t-56-167v-330h103v336q0 56 28 91t82 35q54 0 82-35t28-91v-336h103v330q0 104-56 167t-157 63Z" />
+        </svg>
+      </button>
+      <button
         onClick={() => editor.chain().focus().toggleStrike().run()}
         disabled={!editor.can().chain().focus().toggleStrike().run()}
         className={editor.isActive("strike") ? "is-active" : ""}
@@ -51,6 +68,7 @@ export const Menubar = ({ editor }: any) => {
           <path d="M486-160q-76 0-135-45t-85-123l88-38q14 48 48.5 79t85.5 31q42 0 76-20t34-64q0-18-7-33t-19-27h112q5 14 7.5 28.5T694-340q0 86-61.5 133T486-160ZM80-480v-80h800v80H80Zm402-326q66 0 115.5 32.5T674-674l-88 39q-9-29-33.5-52T484-710q-41 0-68 18.5T386-640h-96q2-69 54.5-117.5T482-806Z" />
         </svg>
       </button>
+      <span className="Separator" />
       <AddLink editor={editor} />
       <button
         onClick={() => editor.chain().focus().toggleBulletList().run()}
@@ -100,8 +118,10 @@ export const Menubar = ({ editor }: any) => {
           />
         </svg>
       </button>
+      <span className="Separator" />
       <AddImage editor={editor} />
       <AddYoutube editor={editor} />
+      <span className="Separator" />
       <button
         onClick={() => editor.chain().focus().undo().run()}
         disabled={!editor.can().chain().focus().undo().run()}

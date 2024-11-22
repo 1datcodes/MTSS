@@ -4,6 +4,7 @@ import axios from "axios";
 
 // Extensions
 import StarterKit from "@tiptap/starter-kit";
+import Underline from "@tiptap/extension-underline";
 import Link from "@tiptap/extension-link";
 import Image from "@tiptap/extension-image";
 import ImageResize from "tiptap-extension-resize-image";
@@ -25,6 +26,7 @@ function Editor({ pageName }: { pageName: string }) {
     content: localStorage.getItem(pageName),
     extensions: [
       StarterKit,
+      Underline,
       Link.configure({
         openOnClick: false,
         autolink: true,
@@ -43,43 +45,56 @@ function Editor({ pageName }: { pageName: string }) {
         types: ["textStyle"],
       }),
       FileHandler.configure({
-        allowedMimeTypes: ['image/png', 'image/jpeg', 'image/gif', 'image/webp'],
+        allowedMimeTypes: [
+          "image/png",
+          "image/jpeg",
+          "image/gif",
+          "image/webp",
+        ],
         onDrop: (currentEditor, files, pos) => {
-          files.forEach(file => {
-            const fileReader = new FileReader()
+          files.forEach((file) => {
+            const fileReader = new FileReader();
 
-            fileReader.readAsDataURL(file)
+            fileReader.readAsDataURL(file);
             fileReader.onload = () => {
-              currentEditor.chain().insertContentAt(pos, {
-                type: 'image',
-                attrs: {
-                  src: fileReader.result,
-                },
-              }).focus().run()
-            }
-          })
+              currentEditor
+                .chain()
+                .insertContentAt(pos, {
+                  type: "image",
+                  attrs: {
+                    src: fileReader.result,
+                  },
+                })
+                .focus()
+                .run();
+            };
+          });
         },
         onPaste: (currentEditor, files, htmlContent) => {
-          files.forEach(file => {
+          files.forEach((file) => {
             if (htmlContent) {
               // if there is htmlContent, stop manual insertion & let other extensions handle insertion via inputRule
               // you could extract the pasted file from this url string and upload it to a server for example
-              console.log(htmlContent)
-              return false
+              console.log(htmlContent);
+              return false;
             }
 
-            const fileReader = new FileReader()
+            const fileReader = new FileReader();
 
-            fileReader.readAsDataURL(file)
+            fileReader.readAsDataURL(file);
             fileReader.onload = () => {
-              currentEditor.chain().insertContentAt(currentEditor.state.selection.anchor, {
-                type: 'image',
-                attrs: {
-                  src: fileReader.result,
-                },
-              }).focus().run()
-            }
-          })
+              currentEditor
+                .chain()
+                .insertContentAt(currentEditor.state.selection.anchor, {
+                  type: "image",
+                  attrs: {
+                    src: fileReader.result,
+                  },
+                })
+                .focus()
+                .run();
+            };
+          });
         },
       }),
     ],
