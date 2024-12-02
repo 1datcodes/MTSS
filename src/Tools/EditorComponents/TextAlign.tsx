@@ -21,7 +21,6 @@ export const TextAlign = ({ editor }: any) => {
     const [alignDirection, setAlignDirection] = useState("left");
 
     const directionHandler = (direction: string) => {
-        console.log(direction);
         if (direction === "left") {
             editor?.chain().focus().setTextAlign("left").run();
             setAlignDirection("left");

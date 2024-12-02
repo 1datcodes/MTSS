@@ -42,7 +42,10 @@ function Editor({ pageName }: { pageName: string }) {
       Typography,
       TextStyle,
       TextStyleExtended,
-      TextAlign,
+      TextAlign.configure({
+        types: ["heading", "paragraph"],
+        alignments: ["left", "center", "right"],
+      }),
       FontFamily.configure({
         types: ["textStyle"],
       }),
