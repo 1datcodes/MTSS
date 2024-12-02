@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import "../Editor.css";
 
 const alignIcons = [
@@ -19,6 +19,7 @@ const alignIcons = [
 export const TextAlign = ({ editor }: any) => {
     const [alignMenu, setAlignMenu] = useState(false);
     const [alignDirection, setAlignDirection] = useState("left");
+    const menuRef = useRef<HTMLDivElement>(null);
 
     const directionHandler = (direction: string) => {
         if (direction === "left") {
@@ -33,8 +34,21 @@ export const TextAlign = ({ editor }: any) => {
         }
     }
 
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+          if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+            setAlignMenu(false);
+          }
+        };
+    
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+          document.removeEventListener("mousedown", handleClickOutside);
+        };
+      }, [menuRef]);
+
     return (
-        <div className="AlignDropdown" style={{ display: alignMenu ? "block" : "none" }}>
+        <div className="AlignDropdown" style={{ display: alignMenu ? "block" : "none" }} ref={menuRef}>
             <button
                 onClick={() => setAlignMenu(!alignMenu)}
                 className="OpenAlignDropdown"
